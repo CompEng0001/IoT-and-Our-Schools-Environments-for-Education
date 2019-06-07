@@ -15,7 +15,8 @@ Once downloaded you will need to install the following libraries:
 * ThingSpeak
 * DHT sensor library for ESPx
 
-* NodeMCU add this to Prefences - additional boards manager url -> http://arduino.esp8266.com/stable/package_esp8266com_index.json
+You'll need to add support for NodeMCU in Arduino IDE
+* Preferences -> Additional boards manager url -> http://arduino.esp8266.com/stable/package_esp8266com_index.json
 
 A quick guide on how to install software on Arduino and/or Pi? 
 A wiring guiding for the sensors.
