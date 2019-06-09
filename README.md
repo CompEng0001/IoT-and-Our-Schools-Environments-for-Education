@@ -1,5 +1,4 @@
-# BeeSensors_STEM
-
+# BeeSensors_STEM                                                                               
 ## Description
 This project is designed and developed for the use in STEM. 
 
@@ -12,6 +11,11 @@ Activities include: selecting and constructing sensor networks to suit environme
 * [How can IoT save Bees](https://www.iotforall.com/how-iot-can-save-bees/)
 * [Pollinators](https://en.wikipedia.org/wiki/Frequency-dependent_foraging_by_pollinators)
 
+## Components
+Name         | Image
+------------ | -------------
+NodeMcu      | ![](https://circuits4you.com/wp-content/uploads/2018/02/NodeMCU.jpg)
+DHT11/22     | ![](http://www.uugear.com/wordpress/wp-content/uploads/2015/03/dht11_2-300x300.jpg)
 
 ## Installation
 * Video link - > coming soon!
@@ -35,5 +39,8 @@ Once installed this is how it works and how you can access the data etc.
 Rich Blair & Phil Moffitt
 
 ## Licensing 
-This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+* This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+* Libraries
+    * ThingSpeak -> [MIT]()
+    * DHT Sensor library for ESPx ->  [GNU GENERAL PUBLIC LICENSE 2007](http://fsf.org/)
 
