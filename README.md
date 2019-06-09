@@ -5,7 +5,9 @@ This project is designed and developed for the use in STEM.
 
 Introduce bees and the importance of them and why this project...
 
-## Installation 
+## Installation
+* Video link - > coming soon!
+
 * First you will need to create a ThingSpeak account - https://thingspeak.com/users/sign_up - free or any other option if you are willing to pay. 
 
 * You'll also need to download Arduino IDE - https://www.arduino.cc/en/Main/Software - you can make a donation if you like, but it is free to use. 
