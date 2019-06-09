@@ -3,7 +3,9 @@
 ## Description
 This project is designed and developed for the use in STEM. 
 
-Introduce bees and the importance of them and why this project...
+This project, aligned with the [Curriculum](https://www.gov.uk/national-curriculum) and Engineering Habits of Mind  [(EHoM)](https://www.raeng.org.uk/publications/reports/thinking-like-an-engineer-implications-full-report), allows teachers and students to: gather data from sensors in a school environment; examine and analyse the data in their school’s computer laboratories and social spaces using the internet and Microbits; and programme actuators to react to the data.  
+
+Activities include: selecting and constructing sensor networks to suit environmental problems; examining data sets; negotiating team roles for installing and coding; testing hardware; working scientifically through enquiry and dialogue across STEM subject areas; and examining industrial, scientific and medical [grand challenges](https://www.gov.uk/government/publications/industrial-strategy-the-grand-challenges/industrial-strategy-the-grand-challenges)
 
 ## Installation
 * Video link - > coming soon!
