@@ -20,9 +20,6 @@ Once downloaded you will need to install the following libraries:
 You'll need to add support for NodeMCU in Arduino IDE
 * Preferences -> Additional boards manager url -> http://arduino.esp8266.com/stable/package_esp8266com_index.json
 
-A quick guide on how to install software on Arduino and/or Pi? 
-A wiring guiding for the sensors.
-
 ## Usage
 Once installed this is how it works and how you can access the data etc.
 
