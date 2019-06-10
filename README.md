@@ -12,10 +12,15 @@ Activities include: selecting and constructing sensor networks to suit environme
 * [Pollinators](https://en.wikipedia.org/wiki/Frequency-dependent_foraging_by_pollinators)
 
 ## Components
-Name         | Image
------------- | -------------
-NodeMcu      | ![](https://circuits4you.com/wp-content/uploads/2018/02/NodeMCU.jpg)
-DHT11/22     | ![](http://www.uugear.com/wordpress/wp-content/uploads/2015/03/dht11_2-300x300.jpg)
+Name            | Image
+------------    | -------------
+NodeMcu         | ![](https://circuits4you.com/wp-content/uploads/2018/02/NodeMCU.jpg)
+DHT11/22        | ![](http://www.uugear.com/wordpress/wp-content/uploads/2015/03/dht11_2-300x300.jpg)
+Soil Moisture   | ![](soilmoistureImage)
+Microhone Sensor| ![](microhoneImage)
+Sensor[x]       | ![](somelink) 
+
+
 
 ## Installation
 * Video link - > coming soon!
