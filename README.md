@@ -36,7 +36,7 @@ You'll need to add support for NodeMCU in Arduino IDE
 Once installed this is how it works and how you can access the data etc.
 
 ## Contribution
-Rich Blair & Phil Moffitt
+[CompEng0001](https://github.com/CompEng0001) & [Phil Moffitt](https://github.com/philipgmoffitt)
 
 ## Licensing 
 * This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
