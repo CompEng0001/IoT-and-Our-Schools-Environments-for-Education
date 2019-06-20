@@ -13,19 +13,17 @@
 #include <DHTesp.h> // download the library - DHT sensor library for ESPx
 #include "ThingSpeak.h" // downlaod the library - ThingSpeak
 
-/*
- * 
- */
-char ssid[] =   "YOUR SSID";     // replace with your wifi ssid and wpa2 key
-char pass[] =  "YOUR SSID PASSWORD";
-unsigned long myChannelNumber = Your Channel; // ThingSpeak Channel number
-const char * myWriteAPIKey = "Your channel Api writekey"; //  Enter your Write API key from ThingSpeak`
+char ssid[] =  "BTHub6-5HZC";     // replace with your wifi ssid and wpa2 key
+char pass[] =  "Y301d3f0rg3";
+unsigned long myChannelNumber = 792104; // ThingSpeak Channel number
+const char * myWriteAPIKey = "B1NL1Z3AL4Q8ALD5"; //  Enter your Write API key from ThingSpeak`
 
 float temp, hum; // variables for DHT22
 
-int moisture =0; // soil Sensor values
+int moisture =0, audio=0; // soil Sensor values
 
-#define DHTPIN 0        //pin where the dht11 is connected A0
+#define DHTPIN 0        //pin where the dht11 is connected D3
+#define audioPIN 14 // D5
 
 DHTesp dht; // create instance of DHTesp
 WiFiClient client; // create instance of WiFiClient
@@ -35,6 +33,7 @@ void setup()
   Serial.begin(115200); //set the baud rate, the number of bits per second
   delay(10); // give serial chance to settle
   dht.setup(DHTPIN, DHTesp::DHT11); // begin the dht service and get DHT11 
+  pinMode(audioPIN,INPUT);
 
   Serial.println("Connecting to "); // debugging purposes
   Serial.println(ssid);
@@ -52,8 +51,17 @@ void setup()
 
 void loop()
 {
+  if(!Serial.available())
+  {
+    Serial.begin(115200); //set the baud rate, the number of bits per second
+    delay(10); // give serial chance to settle
+
+    dht.setup(DHTPIN, DHTesp::DHT11); // begin the dht service and get DHT11
+  }
+  
    // Connect or reconnect to WiFi
-  if(WiFi.status() != WL_CONNECTED){
+  if(WiFi.status() != WL_CONNECTED)
+  {
     Serial.print("Attempting to connect to SSID: ");
     Serial.println(ssid);
     while(WiFi.status() != WL_CONNECTED){
@@ -65,7 +73,7 @@ void loop()
   }
   
   DataAcquistion();
-  SendToThingSpeak(temp, hum, moisture);
+  SendToThingSpeak(temp, hum, audio);
   delay(15000);
   //Sleep();
 }
@@ -81,30 +89,47 @@ void DataAcquistion()
   temp = dht.getTemperature(); 
 
   //Moisture Data
-  moisture = analogRead(A0);
+  audio = analogRead(A0);
+ 
+  //audio
+  //audio = digitalRead(audioPIN);
   // We could do some range sorting and assign new values to indicated the level of moisture like 0-100%
+
+  Serial.print("Temperature is = ");
+  Serial.println(temp);
+  Serial.print("humidity is = ");
+  Serial.println(hum);
+  Serial.print("Audio is = ");
+  Serial.println(audio);
 }
 
 /*
  * This function sends data to thingspeak, each input parameter matches the vars in DataAcquistion()
  * Rememeber you can only send at most 8 fields at once to one chanel.
  */
-void SendToThingSpeak(float l_temp, float l_hum, int l_moisture)
+void SendToThingSpeak(float l_temp, float l_hum, int l_audio)
 {
   // put values into each field to be sent to ThingSpeak as a message
   ThingSpeak.setField(1, l_temp);
   ThingSpeak.setField(2, l_hum);
-  ThingSpeak.setField(3, l_moisture);
+  ThingSpeak.setField(3, l_audio);
 
   // write to the ThingSpeak channel
   int x = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
   
-Serial.println("I AM HERE");
-  if (x == 200) {
+  Serial.println("I AM HERE");
+  if (x == 200) 
+  {
     Serial.println("Channel update successful.");
   }
-  else {
+  else 
+  {
     Serial.println("Problem updating channel. HTTP error code " + String(x));
   }
   delay(10000);
+}
+void powerSavingMode()
+{
+  //Sleep for 30 seconds.
+  ESP.deepSleep(30e6);
 }

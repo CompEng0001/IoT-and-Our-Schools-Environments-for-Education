@@ -16,10 +16,7 @@ Name            | Image
 ------------    | -------------
 NodeMcu         | ![](https://circuits4you.com/wp-content/uploads/2018/02/NodeMCU.jpg)
 DHT11/22        | ![](http://www.uugear.com/wordpress/wp-content/uploads/2015/03/dht11_2-300x300.jpg)
-Soil Moisture   | ![](soilmoistureImage)
-Microhone Sensor| ![](microhoneImage)
-Sensor[x]       | ![](somelink) 
-
+Microhone Sensor| ![](https://sites.google.com/site/summerfuelrobots/_/rsrc/1374684958016/arduino-sensor-tutorials/arduino-sound-sensor/arduino-sound-sensor-module-sound-detection-module-201211270080030_fheiji1354280389445.jpg?height=320&width=320)
 
 
 ## Installation
