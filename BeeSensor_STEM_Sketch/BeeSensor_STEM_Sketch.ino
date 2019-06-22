@@ -1,8 +1,7 @@
 /*
    Sketch developed by User: CompEng0001
    Creation Date: 21/05/2019
-   Modification Date:
-   Verison: 1.0
+   Verison: 1.0.8
 */
 
 // Setup variables to be used
@@ -13,10 +12,10 @@
 #include <DHTesp.h> // download the library - DHT sensor library for ESPx
 #include "ThingSpeak.h" // downlaod the library - ThingSpeak
 
-char ssid[] =  "BTHub6-5HZC";     // replace with your wifi ssid and wpa2 key
-char pass[] =  "Y301d3f0rg3";
-unsigned long myChannelNumber = 792104; // ThingSpeak Channel number
-const char * myWriteAPIKey = "B1NL1Z3AL4Q8ALD5"; //  Enter your Write API key from ThingSpeak`
+char ssid[] =  "Your SSID";     // replace with your wifi ssid and wpa2 key
+char pass[] =  "Your SSID Password";
+unsigned long myChannelNumber = 1234567; // ThingSpeak Channel number
+const char * myWriteAPIKey = "YourAPIKey"; //  Enter your Write API key from ThingSpeak`
 
 float temp, hum; // variables for DHT22
 
@@ -88,19 +87,17 @@ void DataAcquistion()
   hum  = dht.getHumidity();
   temp = dht.getTemperature(); 
 
-  //Moisture Data
+  //audio Data
   audio = analogRead(A0);
- 
-  //audio
-  //audio = digitalRead(audioPIN);
-  // We could do some range sorting and assign new values to indicated the level of moisture like 0-100%
 
+/*
   Serial.print("Temperature is = ");
   Serial.println(temp);
   Serial.print("humidity is = ");
   Serial.println(hum);
   Serial.print("Audio is = ");
   Serial.println(audio);
+  */
 }
 
 /*
@@ -116,8 +113,7 @@ void SendToThingSpeak(float l_temp, float l_hum, int l_audio)
 
   // write to the ThingSpeak channel
   int x = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
-  
-  Serial.println("I AM HERE");
+ 
   if (x == 200) 
   {
     Serial.println("Channel update successful.");
