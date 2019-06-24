@@ -22,7 +22,6 @@ NodeMcu         | ![](https://circuits4you.com/wp-content/uploads/2018/02/NodeMC
 DHT11/22        | ![](http://www.uugear.com/wordpress/wp-content/uploads/2015/03/dht11_2-300x300.jpg)
 Microhone Sensor| ![](https://sites.google.com/site/summerfuelrobots/_/rsrc/1374684958016/arduino-sensor-tutorials/arduino-sound-sensor/arduino-sound-sensor-module-sound-detection-module-201211270080030_fheiji1354280389445.jpg?height=320&width=320)
 
-
 ## Installation
 
 ### Software
@@ -43,7 +42,7 @@ You'll need to add support for NodeMCU in Arduino IDE
 ### Hardware
 Name            | Image
 ------------    | -------------
-NodeMcu         | ![](https://storage.googleapis.com/stateless-www-faranux-com/2016/12/PINOUT-NodeMCU-1_1.8.png)
+NodeMcu         | ![](https://www.faranux.com/2016/12/PINOUT-NodeMCU-1_1.8.png)
 
 ## Usage
 Once installed this is how it works and how you can access the data etc.
