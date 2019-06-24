@@ -1,4 +1,4 @@
-# BeeSensors_STEM                                                                               
+# Internet of Things and Our Schools Envrionments                                                                             
 ## Description
 This project is designed and developed for the use in STEM. 
 
@@ -7,6 +7,10 @@ This project, aligned with the [Curriculum](https://www.gov.uk/national-curricul
 Activities include: selecting and constructing sensor networks to suit environmental problems; examining data sets; negotiating team roles for installing and coding; testing hardware; working scientifically through enquiry and dialogue across STEM subject areas; and examining industrial, scientific and medical [grand challenges](https://www.gov.uk/government/publications/industrial-strategy-the-grand-challenges/industrial-strategy-the-grand-challenges)
 
 ## Research 
+
+### Envrionmental IoT
+
+### Bees
 * [Why are bees important](https://www.sustainweb.org/foodfacts/bees_are_important/)
 * [How can IoT save Bees](https://www.iotforall.com/how-iot-can-save-bees/)
 * [Pollinators](https://en.wikipedia.org/wiki/Frequency-dependent_foraging_by_pollinators)
