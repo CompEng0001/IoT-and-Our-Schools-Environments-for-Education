@@ -24,6 +24,8 @@ Microhone Sensor| ![](https://sites.google.com/site/summerfuelrobots/_/rsrc/1374
 
 
 ## Installation
+
+### Software
 * Video link - > coming soon!
 
 * First you will need to create a ThingSpeak account - https://thingspeak.com/users/sign_up - free or any other option if you are willing to pay. 
@@ -37,6 +39,11 @@ Once downloaded you will need to install the following libraries:
 
 You'll need to add support for NodeMCU in Arduino IDE
 * Preferences -> Additional boards manager url -> http://arduino.esp8266.com/stable/package_esp8266com_index.json
+
+### Hardware
+Name            | Image
+------------    | -------------
+NodeMcu         | ![](https://storage.googleapis.com/stateless-www-faranux-com/2016/12/PINOUT-NodeMCU-1_1.8.png)
 
 ## Usage
 Once installed this is how it works and how you can access the data etc.
