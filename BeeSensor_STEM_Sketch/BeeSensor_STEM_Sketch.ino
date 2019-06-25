@@ -128,4 +128,7 @@ void powerSavingMode()
 {
   //Sleep for 30 seconds.
   ESP.deepSleep(30e6);
+
+  //Sleep for ~3h.50m 
+  //ESP.deepSleep(ESP.deepSleepMax())
 }
