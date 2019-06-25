@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Data Collection Dashboard</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .background-image {
+        background-image: url("http://www.ensembletech.in/wp-content/uploads/2018/07/IoT-Portfolio.jpg");
+        background-color: #ffffff;
+        height: 1000px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+    }
+
+    .background-text {
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+    }
+</style>
+
+<body>
+    <div class="background-image">
+        <div class="background-text">
+            <table border=2 bordercolor="#FFFFFF">
+                <tr>
+                    <td colspan="2">
+                        <h1 align="center" color="#FFFFFF">Data Collection Dashboard</h1>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <iframe width="450" height="260" style="border: 1px solid #cccccc;"
+                            src="https://thingspeak.com/channels/792104/charts/1?bgcolor=%23ffffff&color=%23d62020&days=1&dynamic=true&results=20&title=Temperature&type=step&xaxis=Date%2FTime&yaxis=Temp++%C2%B0C"></iframe>
+                    </td>
+                    <td>
+                        <iframe width="450" height="260" style="border: 1px solid #cccccc;"
+                            src="https://thingspeak.com/channels/792104/widgets/79788&title=Temperature&update=30"></iframe>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <iframe width="450" height="260" style="border: 1px solid #cccccc;"
+                            src="https://thingspeak.com/channels/792104/charts/2?bgcolor=%23ffffff&color=%23d62020&days=1&dynamic=true&results=10&title=Humidity&type=step&xaxis=Date%2FTime&yaxis=Humidity+%25"></iframe>
+                    </td>
+                    <td>
+                        <iframe width="450" height="260" style="border: 1px solid #cccccc;"
+                            src="https://thingspeak.com/channels/792104/widgets/81880&update=30"></iframe>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <iframe width="450" height="260" style="border: 1px solid #cccccc;"
+                            src="https://thingspeak.com/channels/792104/charts/3?bgcolor=%23ffffff&color=%23d62020&days=1&dynamic=true&results=10&title=Audio+levels&type=step&xaxis=Date%2FTime&yaxis=Audio+dB"></iframe>
+                    </td>
+                    <td>
+                        <iframe width="450" height="260" style="border: 1px solid #cccccc;"
+                            src="https://thingspeak.com/channels/792104/widgets/80175"></iframe>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>
