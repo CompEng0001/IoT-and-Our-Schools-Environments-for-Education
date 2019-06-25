@@ -42,7 +42,7 @@ You'll need to add support for NodeMCU in Arduino IDE
 ### Hardware
 Name            | Image
 ------------    | -------------
-NodeMcu         | ![](https://www.faranux.com/2016/12/PINOUT-NodeMCU-1_1.8.png)
+NodeMcu pinout         | ![](https://raw.githubusercontent.com/CompEng0001/BeeSensors_STEM/master/Media/NodeMCU_pinout.png)
 
 ## Usage
 Once installed this is how it works and how you can access the data etc.
