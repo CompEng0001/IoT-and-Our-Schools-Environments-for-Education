@@ -67,7 +67,7 @@
                 <tr>
                     <td>
                         <iframe width="450" height="260" style="border: 1px solid #ffffff;"
-                            src="https://thingspeak.com/channels/792104/charts/3?bgcolor=%23ffffff&color=%23d62020&days=1&dynamic=true&results=10&title=Audio+levels&type=step&xaxis=Date%2FTime&yaxis=Audio+dB"></iframe>
+                            src="https://thingspeak.com/channels/792104/charts/3?bgcolor=%23ffffff&color=%23d62020&days=1&dynamic=true&results=10&title=Barometer&type=step&xaxis=Date%2FTime&yaxis=Pressure+%28hPA%29"></iframe>
                     </td>
                     <td>
                         <iframe width="450" height="260" style="border: 1px solid #ffffff;"
@@ -93,6 +93,11 @@
         x.src = x.src + Math.floor(random() % 100000);
     }
 
+    function f2() {
+        window.location.reload();
+    }
+
     setInterval(f1, 30 * 1000);
+   
 
 </script>

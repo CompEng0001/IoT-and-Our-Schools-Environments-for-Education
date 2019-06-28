@@ -10,6 +10,10 @@ Activities include: selecting and constructing sensor networks to suit environme
 
 ### Envrionmental IoT
 
+ * Why do we need to sense the world around us with devices that are connected in a network?
+ * Schools are part of a [smart city](), a city that uses sensors, big data and interconnected devices in the 10000s. It is important that the schools adopt this method early by using the sensors and big data as a learning tool for those in education so to prepare them for a digital world. 
+ * 
+
 ### Bees
 * [Why are bees important](https://www.sustainweb.org/foodfacts/bees_are_important/)
 * [How can IoT save Bees](https://www.iotforall.com/how-iot-can-save-bees/)
