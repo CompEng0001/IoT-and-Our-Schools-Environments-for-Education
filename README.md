@@ -12,12 +12,6 @@ Activities include: selecting and constructing sensor networks to suit environme
 
  * Why do we need to sense the world around us with devices that are connected in a network?
  * Schools are part of a [smart city](), a city that uses sensors, big data and interconnected devices in the 10000s. It is important that the schools adopt this method early by using the sensors and big data as a learning tool for those in education so to prepare them for a digital world. 
- * 
-
-### Bees
-* [Why are bees important](https://www.sustainweb.org/foodfacts/bees_are_important/)
-* [How can IoT save Bees](https://www.iotforall.com/how-iot-can-save-bees/)
-* [Pollinators](https://en.wikipedia.org/wiki/Frequency-dependent_foraging_by_pollinators)
 
 ## Components
 Name            | Image
@@ -52,7 +46,8 @@ NodeMcu pinout         | ![](https://raw.githubusercontent.com/CompEng0001/BeeSe
 Once installed this is how it works and how you can access the data etc.
 
 ## Contribution
-[CompEng0001](https://github.com/CompEng0001) & [Phil Moffitt](https://github.com/philipgmoffitt)
+Author: [CompEng0001](https://github.com/CompEng0001)
+Contributor: [Phil Moffitt](https://github.com/philipgmoffitt)
 
 ## Licensing 
 * This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
