@@ -1,4 +1,4 @@
-# Internet of Things and Our Schools Envrionments                                                                             
+# Internet of Things and Our Schools Environments                                                                             
 ## Description
 This project is designed and developed for the use in STEM. 
 
