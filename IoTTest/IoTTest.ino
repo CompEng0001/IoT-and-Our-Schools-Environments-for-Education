@@ -1,13 +1,14 @@
-/************************************************************************************************
+/*************************************************************************************************************************************************
  *  Sketch developed by User: CompEng0001
  *  Creation Date: 12/07/2019
  *  Verison: 1.4
- *  Documentation: 
-**************************************************************************************************/
+ *  Hardware: Arduino MKR 1010 uC, Dust sensor, Gas (MQ5) sensor, Light sensors, BMP280, Audio
+ *  Documentation: https://github.com/CompEng0001/IoT-and-Our-Schools-Enivronments-for-Education-
+ *  Licence: Attribution-NonCommercial-ShareAlike 4.0 International [CC BY-NC-SA 4.0] (Where licences for hardware and software do not conflict)
+**************************************************************************************************************************************************/
 
 // Setup variables to be used
-// Simple code upload the tempeature and humidity data using thingspeak.com
-// Hardware: Arduino MKR 1010 uC, Dust sensor, Gas (MQ5) sensor, Light sensors, BMP280 ....
+
 #include <WiFi.h>
 #include <math.h>
 #include <Adafruit_BME280.h>
@@ -32,13 +33,12 @@ float concentration = 0;
 #define GAS_SENSOR = A0;
 float gasValue = 0.0;
 
-// BME280 Sensor variables
+// BMP280 Sensor variables
 float temp, hum, bar;
 
 // BigSound Sensor variable
 #define AUDIO_SENSOR = A2;
 int audio;
-
 
 // Light Sensor variables
 #define LIGHT_SENSOR A1              //Grove - Light Sensor is connected to A0 of Arduino
@@ -70,11 +70,11 @@ void loop()
 
 /**
  * dataAcquisition is acquires data for the 5 sensors
- * @sensor Dust Sensor
+ * @sensor Dust Sensor (concentration)
  * @sensor MQ5 Gas Sensor
  * @sensor BMP280 (Barometer, Temperature and Humidity)
  * @sensor Light sensor (intensity of light)
- * @sensor Audio sensor (amplitude of noise)
+ * @sensor Audio sensor (amplitude of sound)
  */
 void dataAcquisition()
 {
@@ -87,14 +87,15 @@ void dataAcquisition()
     concentration = 1.1 * pow(ratio, 3) - 3.8 * pow(ratio, 2) + 520 * ratio + 0.62;   // using spec sheet curve
     lowpulseoccupancy = 0;
 
-    gasValue = analogRead(GAS_SENSOR);
+    gasValue = analogRead(GAS_SENSOR);                      // Get the reading from the GAS_SENSOR 
 
-    lightLevel = analogRead(LIGHT_SENSOR);
+    lightLevel = analogRead(LIGHT_SENSOR);                  // Get the reading from the LIGHT_SENSOR 
 
-    temp = bme.readTemperature();
-    hum  = bme.readHumidity();
-    bar  = bme.readPressure() / 100.0f;
-    audio = analogRead(AUDIO_SENSOR);
+    temp = bmp.readTemperature();                           // Get the Temperature reading from the BMP280
+    hum  = bmp.readHumidity();                              // Get the Humidity reading from the BMP280
+    bar  = bmp.readPressure() / 100.0f;                     // Get the Pressure reading from the BMP280
+    
+  audio = analogRead(AUDIO_SENSOR);                         // Get the Audio amplitude from the AUDIO_SENSOR
 
     displayData();                                          // Comment to disable debugging to serial monitor
     starttime = millis();                                   // starttime should now be current time 
@@ -171,13 +172,13 @@ void sendToThingSpeak(float l_temp, float l_hum, float l_bar, int l_audio, float
  */
 void connectivity()
 {
-  Serial.begin(115200);                               //set the baud rate, the number of bits per second
+  Serial.begin(115200);                               // set the baud rate, the number of bits per second
   delay(10);                                          // give serial chance to settle
 
   bool status;                                        // Initialized false by default
-  while (!status)                                     // while not true
+  while (!status)                                     // while not true attempt connection to BMP280
   {
-    status = bme.begin(0x76);                         // is this address true?
+    status = bmp.begin(0x76);                         // address is either 0x76 or 0x77
     Serial.println("Could not find a valid BMP280 sensor, check wiring!");
     delay(500);
     Serial.print(".");
@@ -185,13 +186,12 @@ void connectivity()
   Serial.println("");
   Serial.println("BMP280 is connected");
 
-
   Serial.println("Connecting to ");                   // debugging purposes
   Serial.println(ssid);
   ThingSpeak.begin(client);                           // Initialize ThingSpeak
-  WiFi.begin(ssid, pass);
+  WiFi.begin(ssid, pass);                             // Initialize Wifi module with the connection credentials
 
-  while (WiFi.status() != WL_CONNECTED)               // wait for wifi to connect
+  while (WiFi.status() != WL_CONNECTED)               // do this until connected to Wifi
   {
     delay(500);
     Serial.print(".");
