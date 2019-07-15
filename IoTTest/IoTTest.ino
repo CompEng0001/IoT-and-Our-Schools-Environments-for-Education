@@ -30,31 +30,32 @@ float ratio = 0;
 float concentration = 0;
 
 // MQ5 Sensor variables
-#define GAS_SENSOR = A0;
+#define GAS_SENSOR A0
 float gasValue = 0.0;
 
 // BMP280 Sensor variables
-float temp, hum, bar;
+float temp, alt, bar;
 
 // BigSound Sensor variable
-#define AUDIO_SENSOR = A2;
-int audio;
+#define AUDIO_SENSOR A2
+long audio = 0 ;
 
 // Light Sensor variables
-#define LIGHT_SENSOR A1              //Grove - Light Sensor is connected to A0 of Arduino
+#define LIGHT_SENSOR A4              //Grove - Light Sensor is connected to A4
+of Arduino
 const int ledPin = 12;               //Connect the LED Grove module to Pin12, Digital 12
 const int thresholdvalue = 10;       //The treshold for which the LED should turn on. Setting it lower will make it go on at more light, higher for more darkness
 int lightLevel;
 
 WiFiClient client;                    // create instance of WiFiClient
-Adafruit_BME280 bme;                  // I2C
+Adafruit_BMP280 bmp;                  // I2C
 
 // this function runs once everytime the microController is turned on.
 void setup()
 {
   pinMode(pin, INPUT);                // Set Dust Sensor pin to INPUT
 
-  connectivity();                     // for BME280(I2C) WiFi and Thingspeak
+  connectivity();                     // for BMP280(I2C) WiFi and Thingspeak
 
   starttime = millis();               //get the current time;
 }
@@ -63,9 +64,9 @@ void setup()
 void loop() 
 {
   dataAcquisition();                   // get data from sensors 
-
-  sendToThingSpeak(temp, hum, bar, audio, concentration, lightLevel, gasValue );              // Send data from sensors to thingspeak
-  delay(15000);                        // minimum delay(15000) to send next set of data
+  displayData();
+ // sendToThingSpeak(temp, hum, bar, audio, concentration, lightLevel, gasValue );              // Send data from sensors to thingspeak
+  delay(1500);                        // minimum delay(15000) to send next set of data
 }
 
 /**
@@ -92,10 +93,17 @@ void dataAcquisition()
     lightLevel = analogRead(LIGHT_SENSOR);                  // Get the reading from the LIGHT_SENSOR 
 
     temp = bmp.readTemperature();                           // Get the Temperature reading from the BMP280
-    hum  = bmp.readHumidity();                              // Get the Humidity reading from the BMP280
-    bar  = bmp.readPressure() / 100.0f;                     // Get the Pressure reading from the BMP280
-    
-  audio = analogRead(AUDIO_SENSOR);                         // Get the Audio amplitude from the AUDIO_SENSOR
+    alt  = bmp.readAltitude(1013.25);                              // Get the Humidity reading from the BMP280
+    bar  = bmp.readPressure() /100.0f;                     // Get the Pressure reading from the BMP280
+
+    audio = 0;
+    for(int i=0; i<32; i++)
+    {
+        audio += analogRead(AUDIO_SENSOR);
+    }
+
+    audio >>= 5;
+   // audio = analogRead(AUDIO_SENSOR);                         // Get the Audio amplitude from the AUDIO_SENSOR
 
     displayData();                                          // Comment to disable debugging to serial monitor
     starttime = millis();                                   // starttime should now be current time 
@@ -111,26 +119,31 @@ void displayData()
     Serial.print("concentration = ");
     Serial.print(concentration);
     Serial.println(" pcs/0.01cf");                            // Particles/per 0.1cubic feet
-    Serial.println("\n");                                     // New line escape character
+    Serial.println();                                     // New line escape character
 
     //Print gas value
     Serial.print("Gas ADC = ");
     Serial.println(gasValue);
-    Serial.println("\n");
+    Serial.println();
 
     //Print light level
     Serial.print("the Light level ADC is ");
     Serial.println(lightLevel);
-    Serial.println("\n");
+    Serial.println();
 
     //Print BMP280 data
     Serial.print("The pressure is: ");
     Serial.println(bar);
     Serial.print("The Temperature is: ");
     Serial.println(temp);
-    Serial.print("The Humidity is: ");
-    Serial.println(hum);
-    Serial.println("/n");
+    Serial.print("The Altitude is: ");
+    Serial.println(alt);
+    Serial.println();
+
+    //Print Audio
+    Serial.print("The intensity of sound is: ");
+    Serial.println(audio);
+    Serial.println();
 }
 
 /**
@@ -174,18 +187,25 @@ void connectivity()
 {
   Serial.begin(115200);                               // set the baud rate, the number of bits per second
   delay(10);                                          // give serial chance to settle
-
-  bool status;                                        // Initialized false by default
-  while (!status)                                     // while not true attempt connection to BMP280
+Serial.println("HERE");
+                                      // Initialized false by default
+  if(!bmp.begin())                                     // while not true attempt connection to BMP280
   {
-    status = bmp.begin(0x76);                         // address is either 0x76 or 0x77
     Serial.println("Could not find a valid BMP280 sensor, check wiring!");
     delay(500);
     Serial.print(".");
+    while(1);
   }
   Serial.println("");
   Serial.println("BMP280 is connected");
 
+  bmp.setSampling(Adafruit_BMP280::MODE_NORMAL,     /* Operating Mode. */
+                  Adafruit_BMP280::SAMPLING_X2,     /* Temp. oversampling */
+                  Adafruit_BMP280::SAMPLING_X16,    /* Pressure oversampling */
+                  Adafruit_BMP280::FILTER_X16,      /* Filtering. */
+                  Adafruit_BMP280::STANDBY_MS_500); /* Standby time. */
+                  
+/*
   Serial.println("Connecting to ");                   // debugging purposes
   Serial.println(ssid);
   ThingSpeak.begin(client);                           // Initialize ThingSpeak
@@ -195,7 +215,8 @@ void connectivity()
   {
     delay(500);
     Serial.print(".");
-  }
+  }s
   Serial.println("");
   Serial.println("WiFi connected");
+  */
 }
