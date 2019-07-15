@@ -11,7 +11,7 @@
 
 #include <WiFi.h>
 #include <math.h>
-#include <Adafruit_BME280.h>
+#include <Adafruit_BMP280.h>
 #include <ThingSpeak.h> // downlaod the library - ThingSpeak
 
 //WiFi and Thingspeak variables
@@ -110,8 +110,8 @@ void displayData()
   // Print dust concentration
     Serial.print("concentration = ");
     Serial.print(concentration);
-    Serial.println(" pcs/0.01cf");
-    Serial.println("\n"); // New line escape character
+    Serial.println(" pcs/0.01cf");                            // Particles/per 0.1cubic feet
+    Serial.println("\n");                                     // New line escape character
 
     //Print gas value
     Serial.print("Gas ADC = ");
