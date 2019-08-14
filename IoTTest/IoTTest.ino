@@ -14,8 +14,8 @@
 #include <ThingSpeak.h> // downlaod the library - ThingSpeak
 
 //WiFi and Thingspeak variables
-char ssid[] =   "BTHub6-5HZC";     // replace with your wifi ssid and wpa2 key
-char pass[] =  "Y301d3f0rg3";
+char ssid[] =   "CompEng0001";     // replace with your wifi ssid and wpa2 key
+char pass[] =  "12345678!";
 unsigned long myChannelNumber = 792104; // ThingSpeak Channel number
 const char * myWriteAPIKey = "B1NL1Z3AL4Q8ALD5"; //  Enter your Write API key from ThingSpeak`
 
@@ -83,9 +83,9 @@ void dataAcquisition()
 }
 
 /**
- * getGasData acquires the gas ratio which indicates what gas is being detected
- * we can do a look up for this later...?
- */
+   getGasData acquires the gas ratio which indicates what gas is being detected
+   TODO - find the relationship between RS/RO for each gas in PPM?
+*/
 void getGasData()
 {
   float sensor_volt;
@@ -100,10 +100,10 @@ void getGasData()
 }
 
 /**
- * getLightLevels gets the light Intensity 
- * 0 dark 10 blinding 
- * note sensor operates in 540nm range so light is composed of green frequency
- */
+   getLightLevels gets the light Intensity
+   0 dark 10 blinding
+   note sensor operates in 540nm range so light is composed of green frequency
+*/
 void getLightLevels()
 {
   lightLevel = analogRead(LIGHT_SENSOR);
@@ -112,8 +112,8 @@ void getLightLevels()
 }
 
 /**
- * 
- */
+
+*/
 void getBMPValues()
 {
   temp = bmp.readTemperature();                           // Get the Temperature reading from the BMP280
@@ -124,12 +124,13 @@ void getBMPValues()
 void getAudioIntensity()
 {
   audio = 0;
-  for (int i = 0; i < 32; i++)
+
+  for (int i = 0; i < 64; i++)
   {
     audio += analogRead(AUDIO_SENSOR);
   }
+  audio >>= 6;
 
-  audio >>= 5;
 }
 
 void getDustConcentration()
@@ -204,7 +205,7 @@ void sendToThingSpeak(float l_temp, float l_bar, float l_alt, int l_audio, float
   if (x == 200)
   {
     Serial.println("Channel update successful.");
-    
+
   }
   else
   {
@@ -242,7 +243,7 @@ void setupConnectivity()
 
 
   Serial.println("Connecting to ");                    // debugging purposes
-  
+
   ThingSpeak.begin(client);                            // Initialize ThingSpeak
   Serial.println(ssid);                                // Initialize Wifi module with the connection credentials
 }
@@ -251,9 +252,9 @@ void wiFiController()
 {
   WiFi.noLowPowerMode();
 
- while (WiFi.status() != WL_CONNECTED)                // do this until connected to Wifi
+  while (WiFi.status() != WL_CONNECTED)                // do this until connected to Wifi
   {
-    WiFi.begin(ssid, pass);  
+    WiFi.begin(ssid, pass);
     delay(500);
     Serial.print(".");
   }
