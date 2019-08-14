@@ -1,4 +1,4 @@
-# Internet of Things and Our Schools Environments                                                                             
+# Internet of Things and Our Schools Environments     <img align="right" width="100" height="100" src="https://github.com/CompEng0001/IoT-and-Our-Schools-Enivronments-for-Education-/blob/master/Media/Logo.png">                                                                        
 ## Description
 This project is designed and developed for the use in STEM. 
 
