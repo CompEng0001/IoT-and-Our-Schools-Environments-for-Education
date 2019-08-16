@@ -1,5 +1,5 @@
 
-# Internet of Things and Our Schools Environments     <img align="right" width="100" height="100" src="https://github.com/CompEng0001/IoT-and-Our-Schools-Enivronments-for-Education-/blob/master/Media/LogoGreen.png">                                                              
+# Internet of Things and Our Schools Environments     <img align="right" width="100" height="100" src="https://github.com/CompEng0001/IoT-and-Our-Schools-Enivronments-for-Education-/blob/master/Media/Logos/LogoGreen.png">                                                              
 Please use the Wiki attached to this project - > **[IoT Wiki](https://github.com/CompEng0001/IoT-and-Our-Schools-Enivronments-for-Education-/wiki)**
 
 ## Description
