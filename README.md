@@ -1,3 +1,4 @@
+
 # Internet of Things and Our Schools Environments     <img align="right" width="100" height="100" src="https://github.com/CompEng0001/IoT-and-Our-Schools-Enivronments-for-Education-/blob/master/Media/LogoGreen.png">                                                              
 Please use the Wiki attached to this project - > **[IoT Wiki](https://github.com/CompEng0001/IoT-and-Our-Schools-Enivronments-for-Education-/wiki)**
 
@@ -19,6 +20,7 @@ Contributor: [Phil Moffitt](https://github.com/philipgmoffitt)
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
 
 * Libraries
-    * ThingSpeak -> [MIT]()
-    * DHT Sensor library for ESPx ->  [GNU GENERAL PUBLIC LICENSE 2007](http://fsf.org/)
+    * ThingSpeak [MIT]()
+    
+    * DHT Sensor library for ESPx  [GNU GENERAL PUBLIC LICENSE 2007](http://fsf.org/)
 
