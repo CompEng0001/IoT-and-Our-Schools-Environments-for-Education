@@ -1,4 +1,4 @@
-# Components
+ <img align="right" width="100" height="100" src="https://github.com/CompEng0001/IoT-and-Our-Schools-Enivronments-for-Education-/blob/master/Media/Logo.png"># Components
 
 The components listed below are to be used with this project, note that the changing out the sensors for different ones may create sensing errors and therefore make any data unusable. 
 
