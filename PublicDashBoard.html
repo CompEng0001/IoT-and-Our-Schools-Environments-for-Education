@@ -13,10 +13,15 @@
         font-family: Arial, Helvetica, sans-serif;
     }
 
+    html {
+        width: 100%;
+        height: 100%;
+    }
+
     .background-image {
         background-image: url("https://raw.githubusercontent.com/CompEng0001/IoT-and-Our-Schools-Environments-for-Education/master/Media/WebGUI/IoT-Temp-Background.jpg?token=AJTMQ4IKUP2QF2I5GXZZ3H25NEQ4K");
         background-color: #ffffff;
-        height: 1100px;
+        height: 100%;
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
@@ -39,40 +44,68 @@
         <div class="background-text">
             <table border=2 bordercolor="#FFFFFF">
                 <tr>
-                    <td colspan="2">
+                    <td colspan="4">
                         <h1 align="center" color="#FFFFFF">Data Collection Dashboard</h1>
                         <h3 align="left" color="#FFFFFF">Today's date: <span id="datetime"></span></h3>
                     </td>
                 </tr>
                 <tr>
+                    <!--Temperature-->
                     <td>
                         <iframe width="450" height="260" style="border: 1px solid #ffffff;"
-                            src="https://thingspeak.com/channels/792104/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=20&title=Temperature&type=step&xaxis=Date%2FTime&yaxis=Temp++%C2%B0C"></iframe>
+                            src="https://thingspeak.com/channels/792104/charts/1?'bgcolor=%23ffffff&color=%23FF0000&dynamic=true&results=20&title=Temperature&type=step&xaxis=Date%2FTime&yaxis=Temp++%C2%B0C"></iframe>
                     </td>
                     <td>
                         <iframe width="450" height="260" style="border: 1px solid #ffffff;"
                             src="https://thingspeak.com/channels/792104/widgets/79788&title=Temperature&update=30"></iframe>
                     </td>
-                </tr>
-                <tr>
+                    <!--END Temperature-->
+
+                    <!--Humidity-->
                     <td>
                         <iframe width="450" height="260" style="border: 1px solid #ffffff;"
-                            src="https://thingspeak.com/channels/792104/charts/2?bgcolor=%23ffffff&color=%23d62020&days=2&dynamic=true&results=10&title=Humidity&type=step&xaxis=Date%2FTime&yaxis=Humidity+%25"></iframe>
+                            src="https://thingspeak.com/channels/792104/charts/3?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=10&title=Humidity&type=step&xaxis=Date%2FTime&yaxis=Humidity+%25"></iframe>
                     </td>
                     <td>
                         <iframe width="450" height="260" style="border: 1px solid #ffffff;"
                             src="https://thingspeak.com/channels/792104/widgets/81880&update=30"></iframe>
                     </td>
+                    <!--END Humidity-->
                 </tr>
                 <tr>
+                    <!--Dust-->
+                    <td>
+                        <iframe width="450" height="260" style="border: 1px solid #cccccc;"
+                            src="https://thingspeak.com/channels/792104/charts/5?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=20&title=Dust+Concentration&type=line&yaxis=Dust+%28pcs%2F0.01cf%29"></iframe>
+                    </td>
                     <td>
                         <iframe width="450" height="260" style="border: 1px solid #ffffff;"
-                            src="https://thingspeak.com/channels/792104/charts/3?bgcolor=%23ffffff&color=%23d62020&days=2&dynamic=true&results=10&title=Barometer&type=step&xaxis=Date%2FTime&yaxis=Pressure+%28hPA%29"></iframe>
+                            src="https://thingspeak.com/channels/792104/widgets/96846"></iframe>
+                    </td>
+                    <!--END Dust-->
+
+                    <!--Pressure-->
+                    <td>
+                        <iframe width="450" height="260" style="border: 1px solid #ffffff;"
+                            src="https://thingspeak.com/channels/792104/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=10&title=Barometer&type=step&xaxis=Date%2FTime&yaxis=Pressure+%28hPA%29"></iframe>
                     </td>
                     <td>
                         <iframe width="450" height="260" style="border: 1px solid #ffffff;"
                             src="https://thingspeak.com/channels/792104/widgets/80175"></iframe>
                     </td>
+                    <!--END Pressure-->
+                </tr>
+                <tr>
+                    <!--Gas-->
+                    <td>
+                        <iframe width="450" height="260" style="border: 1px solid #ffffff;"
+                            src="https://thingspeak.com/channels/792104/charts/7?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=20&title=Gas+Levels&type=line&yaxis=Rs%2FRo&yaxismax=10&yaxismin=0"></iframe>
+                    </td>
+                    <td>
+                        <iframe width="450" height="260" style="border: 1px solid #cccccc;"
+                            src="https://thingspeak.com/channels/792104/widgets/96944"></iframe>
+                    </td>
+                    <!--END Gas-->
                 </tr>
             </table>
         </div>
@@ -98,6 +131,6 @@
     }
 
     setInterval(f1, 30 * 1000);
-   
+
 
 </script>
