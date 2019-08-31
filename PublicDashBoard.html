@@ -5,10 +5,10 @@
     <title>Data Collection Dashboard</title>
 </head>
 
-<body>
-
-    <div class="background-image">
-        <div class="background-text">
+<body id = "main-content">
+    <div id="load" style="visibility: visible; background-color: #262626;" ><div style=" text-anchor: middle; padding-top: 32.5%; padding-left: 46.5%; color: white;">....Loading APIs....</div></div>
+    <div  id="contents" class="background-image" style="visibility: hidden;">
+        <div  class="background-text">
             <table border=0 bordercolor="#FFFFFF">
                 <tr>
                     <td colspan="4">
@@ -68,11 +68,11 @@
                         <iframe width="450" height="260" style="border: 1px solid #ffffff;"
                             src="https://thingspeak.com/channels/792104/charts/7?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=20&title=Gas+Levels&type=line&yaxis=Rs%2FRo&yaxismax=10&yaxismin=0"></iframe>
                     </td>
-                    <td> 
+                    <td>
                         <!--Actual gas detected in PPM-->
-                        <div class="gas-display" style= "background-color: #FFFFFF; padding: 0.3%; ">
+                        <div class="gas-display" style="background-color: #FFFFFF; padding: 0.3%; ">
                             <div class="gas-info">
-                                <span id= "gasParagraph" class ="gas-paragraph"></span> 
+                                <span id="gasParagraph" class="gas-paragraph"></span>
                             </div>
                             <h4 class="metadata" id="PPM"></h4>
                         </div>
@@ -91,12 +91,11 @@
 </html>
 
 <script>
-
     var dt = new Date();
     document.getElementById("datetime").innerHTML = (("0" + dt.getDate()).slice(-2)) + "." + (("0" + (dt.getMonth() + 1)).slice(-2)) + "." + (dt.getFullYear()) + " Current time: " + (("0" + dt.getHours()).slice(-2)) + ":" + (("0" + dt.getMinutes()).slice(-2));
-    document.getElementById("Notice").innerHTML=("The project has been built by: some class/students?");
-    document.getElementById("Disclaimer").innerHTML=("Disclaimer: The environmental data recorded and shown here is to be seen as an approximation.")
-    document.getElementById("Acknowledgements").innerHTML=("Acknowledgement: STEM Hub Kent and Medway");
+    document.getElementById("Notice").innerHTML = ("The project has been built by: some class/students?");
+    document.getElementById("Disclaimer").innerHTML = ("Disclaimer: The environmental data recorded and shown here is to be seen as an approximation.")
+    document.getElementById("Acknowledgements").innerHTML = ("Acknowledgement: STEM Hub Kent and Medway");
     getGasDetails();
 
     function getGasDetails() {
@@ -155,6 +154,19 @@
     function refresher() {
         getGasDetails();
         refreshDate();
+    } 
+    window.onload = function () {
+        
+        var state = document.readyState
+        if (state == 'interactive') {
+            document.getElementsById('contents').style.visibility = "hidden";
+        } else if (state == 'complete') {
+            setTimeout(function () {
+                document.getElementById('interactive');
+                document.getElementById('load').style.visibility = "hidden";
+                document.getElementById('contents').style.visibility = "visible";
+            }, 5000);
+        }
     }
 
     setInterval(refresher, 30 * 1000);
@@ -163,6 +175,7 @@
 
 <style>
     body {
+        position: relative;
         width: 100%;
         height: 100%;
         overflow: hidden;
@@ -173,6 +186,15 @@
     html {
         width: 100%;
         height: 100%;
+    }
+
+    #load {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        z-index: 9999;
+        background-size: 100% 100%;
+        background: url("https://raw.githubusercontent.com/CompEng0001/IoT-and-Our-Schools-Environments-for-Education/master/Media/WebGUI/Loading.gif") no-repeat center center rgba(0, 0, 0, 0.25)
     }
 
     .background-image {
