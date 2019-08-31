@@ -1,102 +1,110 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <title>Data Collection Dashboard</title>
+    </head>
 
-<head>
-    <title>Data Collection Dashboard</title>
-</head>
+    <body id = "main-content">
+        <!--LOADING SCREEN FOR APIs-->
+        <div id="load" style="visibility: visible; background-color: #262626;" >
+            <div class="loadingtext">....Loading APIs....</div>
+        </div><!--EnD LOADING SCREEN FOR APIs-->
 
-<body id = "main-content">
-    <div id="load" style="visibility: visible; background-color: #262626;" ><div style=" text-anchor: middle; padding-top: 32.5%; padding-left: 46.5%; color: white;">....Loading APIs....</div></div>
-    <div  id="contents" class="background-image" style="visibility: hidden;">
-        <div  class="background-text">
-            <table border=0 bordercolor="#FFFFFF">
-                <tr>
-                    <td colspan="4">
-                        <h1 align="center" color="#FFFFFF">Your School's Environmental IoT Dashboard</h1>
-                        <h3 align="center" color="#FFFFFF">Today's date: <span id="datetime"></span></h3>
-                    </td>
-                </tr>
-                <tr>
-                    <!--Temperature-->
-                    <td>
-                        <iframe width="450" height="260" style="border: 1px solid #ffffff;"
-                            src="https://thingspeak.com/channels/792104/charts/1?'bgcolor=%23ffffff&color=%23FF0000&dynamic=true&results=20&title=Temperature&type=step&xaxis=Date%2FTime&yaxis=Temp++%C2%B0C"></iframe>
-                    </td>
-                    <td>
-                        <iframe width="450" height="260" style="border: 1px solid #ffffff;"
-                            src="https://thingspeak.com/channels/792104/widgets/79788&title=Temperature&update=30"></iframe>
-                    </td>
-                    <!--END Temperature-->
+        <!--Main content-->
+        <div  id="contents" class="background-image" style="visibility: hidden;">
+            <div  class="background-text">
+                <table border=0 bordercolor="#FFFFFF">
+                    <tr>
+                        <td colspan="4">
+                            <h1 align="center" color="#FFFFFF">Your School's Environmental IoT Dashboard</h1>
+                            <h3 align="center" color="#FFFFFF">Today's date: <span id="datetime"></span></h3>
+                        </td>
+                    </tr>
+                    <tr>
+                        <!--Temperature-->
+                        <td>
+                            <iframe width="450" height="260" style="border: 1px solid #ffffff;"
+                                src="https://thingspeak.com/channels/792104/charts/1?'bgcolor=%23ffffff&color=%23FF0000&dynamic=true&results=20&title=Temperature&type=step&xaxis=Date%2FTime&yaxis=Temp++%C2%B0C"></iframe>
+                        </td>
+                        <td>
+                            <iframe width="450" height="260" style="border: 1px solid #ffffff;"
+                                src="https://thingspeak.com/channels/792104/widgets/79788&title=Temperature&update=30"></iframe>
+                        </td>
+                        <!--END Temperature-->
 
-                    <!--Humidity-->
-                    <td>
-                        <iframe width="450" height="260" style="border: 1px solid #ffffff;"
-                            src="https://thingspeak.com/channels/792104/charts/3?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=10&title=Humidity&type=step&xaxis=Date%2FTime&yaxis=Humidity+%25"></iframe>
-                    </td>
-                    <td>
-                        <iframe width="450" height="260" style="border: 1px solid #ffffff;"
-                            src="https://thingspeak.com/channels/792104/widgets/81880&update=30"></iframe>
-                    </td>
-                    <!--END Humidity-->
-                </tr>
-                <tr>
-                    <!--Dust-->
-                    <td>
-                        <iframe width="450" height="260" style="border: 1px solid #cccccc;"
-                            src="https://thingspeak.com/channels/792104/charts/5?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=20&title=Dust+Concentration&type=line&yaxis=Dust+%28pcs%2F0.01cf%29"></iframe>
-                    </td>
-                    <td>
-                        <iframe width="450" height="260" style="border: 1px solid #ffffff;"
-                            src="https://thingspeak.com/channels/792104/widgets/96846"></iframe>
-                    </td>
-                    <!--END Dust-->
+                        <!--Humidity-->
+                        <td>
+                            <iframe width="450" height="260" style="border: 1px solid #ffffff;"
+                                src="https://thingspeak.com/channels/792104/charts/3?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=10&title=Humidity&type=step&xaxis=Date%2FTime&yaxis=Humidity+%25"></iframe>
+                        </td>
+                        <td>
+                            <iframe width="450" height="260" style="border: 1px solid #ffffff;"
+                                src="https://thingspeak.com/channels/792104/widgets/81880&update=30"></iframe>
+                        </td>
+                        <!--END Humidity-->
 
-                    <!--Pressure-->
-                    <td>
-                        <iframe width="450" height="260" style="border: 1px solid #ffffff;"
-                            src="https://thingspeak.com/channels/792104/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=10&title=Barometer&type=step&xaxis=Date%2FTime&yaxis=Pressure+%28hPA%29"></iframe>
-                    </td>
-                    <td>
-                        <iframe width="450" height="260" style="border: 1px solid #ffffff;"
-                            src="https://thingspeak.com/channels/792104/widgets/80175"></iframe>
-                    </td>
-                    <!--END Pressure-->
-                </tr>
-                <tr>
-                    <!--Gas-->
-                    <td>
-                        <iframe width="450" height="260" style="border: 1px solid #ffffff;"
-                            src="https://thingspeak.com/channels/792104/charts/7?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=20&title=Gas+Levels&type=line&yaxis=Rs%2FRo&yaxismax=10&yaxismin=0"></iframe>
-                    </td>
-                    <td>
-                        <!--Actual gas detected in PPM-->
-                        <div class="gas-display" style="background-color: #FFFFFF; padding: 0.3%; ">
-                            <div class="gas-info">
-                                <span id="gasParagraph" class="gas-paragraph"></span>
+                    </tr>
+                    <tr>
+                        <!--Dust-->
+                        <td>
+                            <iframe width="450" height="260" style="border: 1px solid #cccccc;"
+                                src="https://thingspeak.com/channels/792104/charts/5?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=20&title=Dust+Concentration&type=line&yaxis=Dust+%28pcs%2F0.01cf%29"></iframe>
+                        </td>
+                        <td>
+                            <iframe width="450" height="260" style="border: 1px solid #ffffff;"
+                                src="https://thingspeak.com/channels/792104/widgets/96846"></iframe>
+                        </td>
+                        <!--END Dust-->
+
+                        <!--Pressure-->
+                        <td>
+                            <iframe width="450" height="260" style="border: 1px solid #ffffff;"
+                                src="https://thingspeak.com/channels/792104/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=10&title=Barometer&type=step&xaxis=Date%2FTime&yaxis=Pressure+%28hPA%29"></iframe>
+                        </td>
+                        <td>
+                            <iframe width="450" height="260" style="border: 1px solid #ffffff;"
+                                src="https://thingspeak.com/channels/792104/widgets/80175"></iframe>
+                        </td>
+                        <!--END Pressure-->
+
+                    </tr>
+                    <tr>
+                        <!--Gas-->
+                        <td>
+                            <iframe width="450" height="260" style="border: 1px solid #ffffff;"
+                                src="https://thingspeak.com/channels/792104/charts/7?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=20&title=Gas+Levels&type=line&yaxis=Rs%2FRo&yaxismax=10&yaxismin=0"></iframe>
+                        </td>
+                        <td>
+                            <!--Actual gas detected in PPM-->
+                            <div class="gas-display" style="background-color: #FFFFFF; padding: 0.3%; ">
+                                <div class="gas-info">
+                                    <span id="gasParagraph" class="gas-paragraph"></span>
+                                </div>
+                                <h4 class="metadata" id="PPM"></h4>
                             </div>
-                            <h4 class="metadata" id="PPM"></h4>
-                        </div>
-                        <!--END Actual gas detected in PPM-->
-                    </td>
-                    <!--END Gas-->
-                </tr>
-            </table>
-            <h4 id="Notice"> </h4>
-            <h4 id="Disclaimer"> </h4>
-            <h6 id="Acknowledgements"></h6>
+                            <!--END Actual gas detected in PPM-->
+                        </td>
+                        <!--END Gas-->
+                    </tr>
+                </table>
+                <h4 id="Notice"> </h4>
+                <h4 id="Disclaimer"> </h4>
+                <h6 id="Acknowledgements"></h6>
+            </div>
         </div>
-    </div>
-</body>
+    </body>
 
 </html>
 
 <script>
     var dt = new Date();
-    document.getElementById("datetime").innerHTML = (("0" + dt.getDate()).slice(-2)) + "." + (("0" + (dt.getMonth() + 1)).slice(-2)) + "." + (dt.getFullYear()) + " Current time: " + (("0" + dt.getHours()).slice(-2)) + ":" + (("0" + dt.getMinutes()).slice(-2));
+    document.getElementById("datetime").innerHTML = (("0" + dt.getDate()).slice(-2)) + "." + 
+    (("0" + (dt.getMonth() + 1)).slice(-2)) + "." + (dt.getFullYear()) + " Current time: " +
+    (("0" + dt.getHours()).slice(-2)) + ":" + (("0" + dt.getMinutes()).slice(-2));
+
     document.getElementById("Notice").innerHTML = ("The project has been built by: some class/students?");
     document.getElementById("Disclaimer").innerHTML = ("Disclaimer: The environmental data recorded and shown here is to be seen as an approximation.")
     document.getElementById("Acknowledgements").innerHTML = ("Acknowledgement: STEM Hub Kent and Medway");
-    getGasDetails();
 
     function getGasDetails() {
 
@@ -142,21 +150,19 @@
 
     function refreshDate() {
         var dt = new Date();
-        document.getElementById("datetime").innerHTML = (("0" + dt.getDate()).slice(-2)) + "." + (("0" + (dt.getMonth() + 1)).slice(-2)) + "." + (dt.getFullYear()) + " Current time: " + (("0" + dt.getHours()).slice(-2)) + ":" + (("0" + dt.getMinutes()).slice(-2));
-        // var x = document.getElementById("myiframe");
-        //x.src = x.src + Math.floor(random() % 100000);
-    }
-
-    function reloadWindow() {
-        window.location.reload();
+        document.getElementById("datetime").innerHTML = (("0" + dt.getDate()).slice(-2)) + "." + 
+        (("0" + (dt.getMonth() + 1)).slice(-2)) + "." + (dt.getFullYear()) + " Current time: " + 
+        (("0" + dt.getHours()).slice(-2)) + ":" + (("0" + dt.getMinutes()).slice(-2));
     }
 
     function refresher() {
         getGasDetails();
         refreshDate();
     } 
+
     window.onload = function () {
-        
+        openFullscreen();
+        getGasDetails();
         var state = document.readyState
         if (state == 'interactive') {
             document.getElementsById('contents').style.visibility = "hidden";
@@ -169,9 +175,22 @@
         }
     }
 
+    var elem = document.documentElement;
+
+    function openFullscreen() {
+        if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+    } else if (elem.mozRequestFullScreen) { /* Firefox */
+        elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+        elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) { /* IE/Edge */
+        elem.msRequestFullscreen();
+        }
+    }
+
     setInterval(refresher, 30 * 1000);
 </script>
-
 
 <style>
     body {
@@ -194,7 +213,27 @@
         position: fixed;
         z-index: 9999;
         background-size: 100% 100%;
-        background: url("https://raw.githubusercontent.com/CompEng0001/IoT-and-Our-Schools-Environments-for-Education/master/Media/WebGUI/Loading.gif") no-repeat center center rgba(0, 0, 0, 0.25)
+        animation: fadein 3s;
+        -moz-animation: fadein 3s; /* Firefox */
+        -webkit-animation: fadein 3s; /* Safari and Chrome */
+        -o-animation: fadein 3s; /* Opera */
+        background: url("https://raw.githubusercontent.com/CompEng0001/IoT-and-Our-Schools-Environments-for-Education/master/Media/WebGUI/Loading.gif") no-repeat center center rgba(0, 0, 0, 0.25);
+    }
+
+    @keyframes fadein {
+        from {
+            opacity:0;
+        }
+        to {
+            opacity:1;
+        }
+    }
+
+    .loadingtext{
+        text-anchor: middle; 
+        padding-top: 35.5%;
+        padding-left: 46.5%;
+        color: #FFFFFF;
     }
 
     .background-image {
