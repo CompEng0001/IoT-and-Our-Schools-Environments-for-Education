@@ -69,7 +69,7 @@
 
                     </tr>
                     <tr>
-                        <!--Gas-->
+                        <!--MQ5 Gas-->
                         <td>
                             <iframe width="450" height="260" style="border: 1px solid #ffffff;"
                                 src="https://thingspeak.com/channels/792104/charts/7?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=20&title=Gas+Levels&type=line&yaxis=Rs%2FRo&yaxismax=10&yaxismin=0"></iframe>
@@ -84,7 +84,18 @@
                             </div>
                             <!--END Actual gas detected in PPM-->
                         </td>
-                        <!--END Gas-->
+                        <!--END MQ5 Gas-->
+
+                        <!--VOC Gas-->
+                        <td>
+                                <iframe width="450" height="260" style="border: 1px solid #ffffff;"
+                                    src="https://thingspeak.com/channels/792104/charts/7?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=20&title=Gas+Levels&type=line&yaxis=Rs%2FRo&yaxismax=10&yaxismin=0"></iframe>
+                            </td>
+                            <td>
+                                <iframe width="450" height="260" style="border: 1px solid #ffffff;"
+                                    src="https://thingspeak.com/channels/792104/charts/7?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=20&title=Gas+Levels&type=line&yaxis=Rs%2FRo&yaxismax=10&yaxismin=0"></iframe>
+                            </td>
+                            <!--END Gas-->
                     </tr>
                 </table>
                 <h4 id="Notice"> </h4>
@@ -175,9 +186,8 @@
         }
     }
 
-    var elem = document.documentElement;
-
     function openFullscreen() {
+        var elem = document.documentElement;
         if (elem.requestFullscreen) {
         elem.requestFullscreen();
     } else if (elem.mozRequestFullScreen) { /* Firefox */
