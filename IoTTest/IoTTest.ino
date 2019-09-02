@@ -35,10 +35,6 @@ float gasValue = 0.0;
 // BMP280 Sensor variables
 float temp, alt, bar;
 
-// BigSound Sensor variable
-#define AUDIO_SENSOR A2
-long audio = 0 ;
-
 // Light Sensor variables
 #define LIGHT_SENSOR A4              //Grove - Light Sensor is connected to A4of Arduino
 const int ledPin = 12;               //Connect the LED Grove module to Pin12, Digital 12
@@ -66,12 +62,12 @@ void loop()
 }
 
 /**
-   dataAcquisition is acquires data for the 5 sensors
-   @sensor Dust Sensor (concentration)
-   @sensor MQ5 Gas Sensor
-   @sensor BMP280 (Barometer, Temperature and Humidity)
-   @sensor Light sensor (intensity of light)
-   @sensor Audio sensor (amplitude of sound)
+  dataAcquisition is acquires data for the 5 sensors
+  @sensor Dust Sensor (concentration)
+  @sensor MQ5 Gas Sensor
+  @sensor BMP280 (Barometer, Temperature and Humidity)
+  @sensor Light sensor (intensity of light)
+  @sensor Audio sensor (amplitude of sound)
 */
 void dataAcquisition()
 {
@@ -83,8 +79,8 @@ void dataAcquisition()
 }
 
 /**
-   getGasData acquires the gas ratio which indicates what gas is being detected
-   TODO - find the relationship between RS/RO for each gas in PPM?
+  getGasData acquires the gas ratio which indicates what gas is being detected
+  TODO - find the relationship between RS/RO for each gas in PPM?
 */
 void getGasData()
 {
@@ -100,9 +96,9 @@ void getGasData()
 }
 
 /**
-   getLightLevels gets the light Intensity
-   0 dark 10 blinding
-   note sensor operates in 540nm range so light is composed of green frequency
+  getLightLevels gets the light Intensity
+  0 dark 10 blinding
+  note sensor operates in 540nm range so light is composed of green frequency
 */
 void getLightLevels()
 {
@@ -121,18 +117,6 @@ void getBMPValues()
   bar  = bmp.readPressure() / 100.0f;                    // Get the Pressure reading from the BMP280
 }
 
-void getAudioIntensity()
-{
-  audio = 0;
-
-  for (int i = 0; i < 64; i++)
-  {
-    audio += analogRead(AUDIO_SENSOR);
-  }
-  audio >>= 6;
-
-}
-
 void getDustConcentration()
 {
   duration = pulseIn(pin, LOW);                             // Set dust pin to low then check if another time has passed
@@ -143,7 +127,7 @@ void getDustConcentration()
 }
 
 /**
-   Display all sensor data on to serial monitor for debugging purposes
+  Display all sensor data on to serial monitor for debugging purposes
 */
 void displayData()
 {
@@ -172,10 +156,6 @@ void displayData()
   Serial.println(alt);
   Serial.println();
 
-  //Print Audio
-  Serial.print("The intensity of sound is: ");
-  Serial.println(audio);
-  Serial.println();
 }
 
 /**
@@ -183,18 +163,16 @@ void displayData()
    @param Temperature
    @param Pressure
    @param Altitude
-   @param Audio
    @param Dust
    @param Light
    @Param Gas
 */
-void sendToThingSpeak(float l_temp, float l_bar, float l_alt, int l_audio, float l_dust, int l_light, float l_gas)
+void sendToThingSpeak(float l_temp, float l_bar, float l_alt, float l_dust, int l_light, float l_gas)
 {
   // this formats the data into the accepted format for thingspeak to process
   ThingSpeak.setField(1, l_temp);
   ThingSpeak.setField(2, l_bar);
   ThingSpeak.setField(3, l_alt);
-  ThingSpeak.setField(4, l_audio);
   ThingSpeak.setField(5, l_dust);
   ThingSpeak.setField(6, l_light);
   ThingSpeak.setField(7, l_gas);
