@@ -120,9 +120,12 @@
 
     function getGasDetails() 
     {
+        var notGasLookupTable = false; 
         var json_obj = JSON.parse(Get('https://api.thingspeak.com/channels/792104/fields/7/last.json'));
         // only change (jso_obj.YOURFIELD#))
-        var gas_value = "2.35";//parseFloat(JSON.parse(json_obj.field7)).toFixed(2);
+        var JSON_gas_value = "0.38";//parseFloat(JSON.parse(json_obj.field7)).toFixed(2);
+        var gasvalueNumber = parseFloat(JSON_gas_value).toFixed(2);
+        var gas_value =  parseFloat(getClosestGas(gasvalueNumber)).toFixed(2);
         var GasLookupTable =
         {
             TwoHunPPM: ["0.70", "0.90", "1.70", "3.50", "3.90"],
@@ -137,7 +140,6 @@
             GasNames: ["LPG", "Methane (CH4)", "Hydrogen (H2)", "Ethanol/Methanol", "Carbon-dioxide (C0)", "Normal Air"],
             PPM: [200, 500, 800, 1000, 1600, 2000, 3000, 5000, 10000]
         };
-
         var counter = 0;
         for (var value in GasLookupTable) {
             if (GasLookupTable.hasOwnProperty(value) && GasLookupTable[value].indexOf(gas_value) != -1) {
@@ -150,7 +152,25 @@
             }
             counter += 1;
         }
-        return "Not found";
+    }
+
+    function getClosestGas(num)
+    {
+        var i = 0, closest, closestDiff, currentDiff;
+        const gasArray = [0.70, 0.90, 1.70, 3.50, 3.90, 0.48, 0.69, 1.30, 3.30,3.40,
+                    0.39, 0.55, 1.10, 3.00, 3.30, 0.37, 0.51, 0.90, 2.70, 2.90, 
+                    0.30, 0.44, 0.88, 2.30, 2.80, 0.27, 0.40, 0.81, 2.10, 2.60,
+                    0.24, 0.34, 0.78, 2.00, 2.50, 0.19, 0.28, 0.72, 1.80, 2.40,
+                    0.16, 0.20, 0.68, 1.60, 2.35, 6.50]
+            closest = gasArray[0];
+            for(i;i<gasArray.length;i++)
+            { 
+                closestDiff = Math.abs(num - closest);currentDiff = Math.abs(num - gasArray[i]);
+                    if(currentDiff < closestDiff){closest = gasArray[i];}
+                closestDiff = null;currentDiff = null;
+            }
+        //returns first element that is closest to number
+        return String(closest);
     }
 
     function Get(yourUrl) {
