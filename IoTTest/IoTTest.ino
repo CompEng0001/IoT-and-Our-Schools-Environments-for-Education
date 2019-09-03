@@ -8,22 +8,22 @@
 **************************************************************************************************************************************************/
 
 // Setup variables to be used
-#include <WiFiNINA.h> // enable WiFi for MKR1010
-#include <math.h> // for some math functions
-#include <Adafruit_BMP280.h> // for BMP280 sensor
-#include <ThingSpeak.h> // downlaod the library - ThingSpeak
+#include <WiFiNINA.h>        // enable WiFi for MKR1010
+#include <math.h>            // for some math functions
+#include <Seeed_bme680.h>    // for BME680 sensor
+#include <ThingSpeak.h>      // downlaod the library - ThingSpeak
 
 //WiFi and Thingspeak variables
-char ssid[] =   "CompEng0001";     // replace with your wifi ssid and wpa2 key
-char pass[] =  "12345678!";
-unsigned long myChannelNumber = 792104; // ThingSpeak Channel number
-const char * myWriteAPIKey = "B1NL1Z3AL4Q8ALD5"; //  Enter your Write API key from ThingSpeak`
+char ssid[] = "CompEng0001"; // replace with your wifi ssid and wpa2 key
+char pass[] = "12345678!";
+unsigned long myChannelNumber = 792104;         // ThingSpeak Channel number
+const char *myWriteAPIKey = "B1NL1Z3AL4Q8ALD5"; //  Enter your Write API key from ThingSpeak`
 
 // Dust Sensor variables
 int pin = 0;
 unsigned long duration;
 unsigned long starttime;
-unsigned long sampletime_ms = 30000;//sampe 30s
+unsigned long sampletime_ms = 30000; //sampe 30s
 unsigned long lowpulseoccupancy = 0;
 float ratio = 0;
 float concentration = 0;
@@ -33,49 +33,53 @@ float concentration = 0;
 float gasValue = 0.0;
 
 // BMP280 Sensor variables
-float temp, alt, bar;
+float temp, hum, bar, voc;
+#define BME_SCK 13
+#define BME_MISO 12
+#define BME_MOSI 11
+#define BME_CS 10
+#define IIC_ADDR  uint8_t(0x76)
+
 
 // Light Sensor variables
-#define LIGHT_SENSOR A4              //Grove - Light Sensor is connected to A4of Arduino
-const int ledPin = 12;               //Connect the LED Grove module to Pin12, Digital 12
-const int thresholdvalue = 10;       //The treshold for which the LED should turn on. Setting it lower will make it go on at more light, higher for more darkness
+#define LIGHT_SENSOR A4        //Grove - Light Sensor is connected to A4of Arduino
+const int ledPin = 12;         //Connect the LED Grove module to Pin12, Digital 12
+const int thresholdvalue = 10; //The treshold for which the LED should turn on. Setting it lower will make it go on at more light, higher for more darkness
 int lightLevel;
 
-WiFiClient client;                    // create instance of WiFiClient
-Adafruit_BMP280 bmp;                  // I2C
+WiFiClient client;   // create instance of WiFiClient
+Seeed_BME680 bme680(IIC_ADDR); //IIC
 
 // this function runs once everytime the microController is turned on.
 void setup()
 {
-  pinMode(pin, INPUT);                // Set Dust Sensor pin to INPUT
+  pinMode(pin, INPUT); // Set Dust Sensor pin to INPUT
   setupConnectivity();
 }
 
 // this runs forever, or until the microController is turned off.
 void loop()
 {
-  dataAcquisition();                   // get data from sensors
+  dataAcquisition(); // get data from sensors
   displayData();
   wiFiController();
-  sendToThingSpeak(temp, bar, alt, audio, concentration, lightLevel, gasValue);
-  delay(30000);        // for BMP280(I2C) WiFi and Thingspeak
+  sendToThingSpeak(temp, bar, alt, voc, concentration, lightLevel, gasValue);
+  delay(30000); // for BMP280(I2C) WiFi and Thingspeak
 }
 
 /**
   dataAcquisition is acquires data for the 5 sensors
   @sensor Dust Sensor (concentration)
   @sensor MQ5 Gas Sensor
-  @sensor BMP280 (Barometer, Temperature and Humidity)
+  @sensor BMP680 (Barometer, Temperature,Humidity and VOC)
   @sensor Light sensor (intensity of light)
-  @sensor Audio sensor (amplitude of sound)
 */
 void dataAcquisition()
 {
-  getDustConcentration();
-  getGasData();                                           // Get the reading from the GAS_SENSOR
+  getDustConcentration(); // this takes 30 seconds
+  getGasData();           // Get the reading from the GAS_SENSOR
   getLightLevels();
   getBMPValues();
-  getAudioIntensity();
 }
 
 /**
@@ -86,7 +90,7 @@ void getGasData()
 {
   float sensor_volt;
   float RS_gas; // Get value of RS in a GAS
-  float ratio; // Get ratio RS_GAS/RS_air
+  float ratio;  // Get ratio RS_GAS/RS_air
   int sensorValue = analogRead(GAS_SENSOR);
   sensor_volt = (float)sensorValue / 1024 * 5.0;
   RS_gas = (5.0 - sensor_volt) / sensor_volt; // omit *RL
@@ -104,38 +108,61 @@ void getLightLevels()
 {
   lightLevel = analogRead(LIGHT_SENSOR);
 
-  lightLevel = map(lightLevel, 0, 900, 0, 10);// Get the reading from the LIGHT_SENSOR and turn map from high to low
+  lightLevel = map(lightLevel, 0, 900, 0, 10); // Get the reading from the LIGHT_SENSOR and turn map from high to low
 }
 
 /**
-
+*
 */
 void getBMPValues()
 {
-  temp = bmp.readTemperature();                           // Get the Temperature reading from the BMP280
-  alt  = abs(bmp.readAltitude(1013.25));                              // Get the Humidity reading from the BMP280
-  bar  = bmp.readPressure() / 100.0f;                    // Get the Pressure reading from the BMP280
+  if(bme680.read_sensor_data()){
+    //debugging only
+    Serial.println("Failed to perform reading :(");
+    return;
+  }
+  temp = bme680.sensor_result_value.temperature;         // Get the Temperature reading from the BMP280
+  bar = bme680.sensor_result_value.pressure/ 1000.0;    // Get the Pressure reading from the BMP280
+  hum = bme680.sensor_result_value.humidity;
+  voc = bme680.sensor_result_value.gas/ 1000.0;
 }
+/**
+ * 
+ */
 
 void getDustConcentration()
 {
-  duration = pulseIn(pin, LOW);                             // Set dust pin to low then check if another time has passed
-  lowpulseoccupancy = lowpulseoccupancy + duration;
-  ratio = lowpulseoccupancy / (sampletime_ms * 10.0);     // Integer percentage 0=&gt;100
-  concentration = 1.1 * pow(ratio, 3) - 3.8 * pow(ratio, 2) + 520 * ratio + 0.62;   // using spec sheet curve
-  lowpulseoccupancy = 0;
+  bool data = false;
+  while (!data)
+  {
+    duration = pulseIn(pin, LOW);
+    lowpulseoccupancy = lowpulseoccupancy + duration;
+    if ((millis() - starttime) > sampletime_ms) //if the sampel time == 30s
+    {
+      ratio = lowpulseoccupancy / (sampletime_ms * 10.0);                             // Integer percentage 0=>100
+      concentration = 1.1 * pow(ratio, 3) - 3.8 * pow(ratio, 2) + 520 * ratio + 0.62; // using spec sheet curve
+      Serial.print(lowpulseoccupancy);
+      Serial.print(",");
+      Serial.print(ratio);
+      Serial.print(",");
+      Serial.println(concentration);
+      lowpulseoccupancy = 0;
+      starttime = millis();
+      data = true;
+    }
+  }
 }
 
 /**
-  Display all sensor data on to serial monitor for debugging purposes
-*/
+  *Display all sensor data on to serial monitor for debugging purposes
+  */
 void displayData()
 {
   // Print dust concentration
   Serial.print("concentration = ");
   Serial.print(concentration);
-  Serial.println(" pcs/0.01cf");                            // Particles/per 0.1cubic feet
-  Serial.println();                                     // New line escape character
+  Serial.println(" pcs/0.01cf"); // Particles/per 0.1cubic feet
+  Serial.println();              // New line escape character
 
   //Print gas value
   Serial.print("Air Quality = ");
@@ -148,31 +175,35 @@ void displayData()
   Serial.println();
 
   //Print BMP280 data
-  Serial.print("The pressure is: ");
+  Serial.print("The pressure (kpa) is: ");
   Serial.println(bar);
-  Serial.print("The Temperature is: ");
+  Serial.print("The Temperature (C) is: ");
   Serial.println(temp);
-  Serial.print("The Altitude is: ");
-  Serial.println(alt);
+  Serial.print("The Humidity(%)is: ");
+  Serial.println(hum);
   Serial.println();
-
+  Serial.print("The VOC (khoms) is: ");
+  Serial.println(voc);
+  Serial.println();
 }
 
 /**
-   sendToThingSpeak function takes 7 variables and sends them to thingspeak this matches number of fields in the thingspeak channel you created.
-   @param Temperature
-   @param Pressure
-   @param Altitude
-   @param Dust
-   @param Light
-   @Param Gas
+  sendToThingSpeak function takes 7 variables and sends them to thingspeak this matches number of fields in the thingspeak channel you created.
+  @param Temperature
+  @param Pressure
+  @param humidity
+  @param VOC
+  @param Dust
+  @param Light
+  @Param Gas
 */
-void sendToThingSpeak(float l_temp, float l_bar, float l_alt, float l_dust, int l_light, float l_gas)
+void sendToThingSpeak(float l_temp, float l_bar, float l_hum, float l_voc, float l_dust, int l_light, float l_gas)
 {
   // this formats the data into the accepted format for thingspeak to process
   ThingSpeak.setField(1, l_temp);
   ThingSpeak.setField(2, l_bar);
-  ThingSpeak.setField(3, l_alt);
+  ThingSpeak.setField(3, l_hum);
+  ThingSpeak.setField(4, l_voc);
   ThingSpeak.setField(5, l_dust);
   ThingSpeak.setField(6, l_light);
   ThingSpeak.setField(7, l_gas);
@@ -183,7 +214,6 @@ void sendToThingSpeak(float l_temp, float l_bar, float l_alt, float l_dust, int 
   if (x == 200)
   {
     Serial.println("Channel update successful.");
-
   }
   else
   {
@@ -195,21 +225,21 @@ void sendToThingSpeak(float l_temp, float l_bar, float l_alt, float l_dust, int 
 }
 
 /**
-   connectivity function sets up the connection to BMP280 and WiFi
+  connectivity function sets up the connection to BMP280 and WiFi
 */
 void setupConnectivity()
 {
-  Serial.begin(115200);                               // set the baud rate, the number of bits per second
-  delay(1000);                                          // give serial chance to settle
+  Serial.begin(115200); // set the baud rate, the number of bits per second
+  delay(1000);          // give serial chance to settle
   Serial.println("HERE");
+
   // Initialized false by default
-  if (!bmp.begin())                                    // while not true attempt connection to BMP280
+  while (!bme680.init()) 
   {
-    Serial.println("Could not find a valid BMP280 sensor, check wiring!");
-    delay(500);
-    Serial.print(".");
-    while (1);
+    Serial.println("bme680 init failed ! can't find device!");
+  delay(10000);
   }
+
   Serial.println("");
   Serial.println("BMP280 is connected");
 
@@ -219,18 +249,17 @@ void setupConnectivity()
                   Adafruit_BMP280::FILTER_X16,      /* Filtering. */
                   Adafruit_BMP280::STANDBY_MS_500); /* Standby time. */
 
+  Serial.println("Connecting to "); // debugging purposes
 
-  Serial.println("Connecting to ");                    // debugging purposes
-
-  ThingSpeak.begin(client);                            // Initialize ThingSpeak
-  Serial.println(ssid);                                // Initialize Wifi module with the connection credentials
+  ThingSpeak.begin(client); // Initialize ThingSpeak
+  Serial.println(ssid);     // Initialize Wifi module with the connection credentials
 }
 
 void wiFiController()
 {
   WiFi.noLowPowerMode();
 
-  while (WiFi.status() != WL_CONNECTED)                // do this until connected to Wifi
+  while (WiFi.status() != WL_CONNECTED) // do this until connected to Wifi
   {
     WiFi.begin(ssid, pass);
     delay(500);
@@ -238,5 +267,4 @@ void wiFiController()
   }
   Serial.println("");
   Serial.println("WiFi connected");
-
 }
