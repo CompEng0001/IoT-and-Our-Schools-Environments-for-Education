@@ -12,6 +12,7 @@
 #include <math.h>            // for some math functions
 #include <Seeed_bme680.h>    // for BME680 sensor
 #include <ThingSpeak.h>      // downlaod the library - ThingSpeak
+#include <lowPowerMode.h>    // enable powersaving 
 
 //WiFi and Thingspeak variables
 char ssid[] = "CompEng0001"; // replace with your wifi ssid and wpa2 key
@@ -50,23 +51,35 @@ int lightLevel;
 WiFiClient client;   // create instance of WiFiClient
 Seeed_BME680 bme680(IIC_ADDR); //IIC
 
+//power Mode
+int sleepingTime = 1800000;
+bool awake = true;
+
 // this function runs once everytime the microController is turned on.
 void setup()
 {
   pinMode(pin, INPUT); // Set Dust Sensor pin to INPUT
   setupConnectivity();
+  LowPower.attachInterruptWakeup(RTC_ALARM_WAKEUP, WakeUp, CHANGE);
 }
 
 // this runs forever, or until the microController is turned off.
 void loop()
 {
-  dataAcquisition(); // get data from sensors
-  displayData();
-  wiFiController();
-  sendToThingSpeak(temp, bar, alt, voc, concentration, lightLevel, gasValue);
-  delay(30000); // for BMP280(I2C) WiFi and Thingspeak
+  if (awake) {
+    dataAcquisition(); // get data from sensors
+    displayData();
+    wiFiController();
+    sendToThingSpeak(temp, bar, alt, voc, concentration, lightLevel, gasValue);
+  }
+  awake = false;
+  //Serial.println("going to sleep");
+  LowPower.sleep(sleeping_time);
 }
 
+void WakeUp(){
+  awake =true;
+}
 /**
   dataAcquisition is acquires data for the 5 sensors
   @sensor Dust Sensor (concentration)
