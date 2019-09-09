@@ -6,169 +6,161 @@
     <title>Data Collection Dashboard</title>
 </head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+    <body id="main-content">
 
-<body id="main-content">
-    <!--LOADING SCREEN FOR APIs-->
-    <div id="load" style="visibility: visible; background-color: #262626;">
-        <div class="loadingtext">....Loading APIs....</div>
-    </div>
-    <div class="background-text">
+        <!--LOADING SCREEN FOR APIs-->
+        <div id="load" style="visibility: visible; background-color: #262626;">
+                <div class="loadingtext">....Loading APIs....</div>
+        </div>
         <!--EnD LOADING SCREEN FOR APIs-->
-        <h1 align="center" color="#FFFFFF">Your School's Environmental IoT Dashboard</h1>
-        <h3 align="center" color="#FFFFFF">Today's date: <span id="datetime"></span></h3>
-    </div>
-    <!--Main content-->
-    <div class="split left">
-        <div class="centered" style="width: 90%">
-            <ul class="w3-ul w3-card-4" style="background-color: #FFFFFF;">
 
-                <!--MQ5 GAS DATA-->
-                <li class="w3-bar">
-                    <img src="https://raw.githubusercontent.com/CompEng0001/IoT-and-Our-Schools-Environments-for-Education/master/Media/WebGUI/MQ5_Dashboard_icon.png"
-                        class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
-                    <div class="w3-bar-item">
-                        <span id="gasParagraph" class="w3-large"></span><br>
-                        <span id="PPM" class="w3-large"></span>
-                    </div>
-                </li>
+        <div id="contents" style="visibility: hidden">
+            
+            <div class="background-text" >
+                <h1 align="center" color="#FFFFFF">Your School's Environmental IoT Dashboard</h1>
+            </div>
 
-                <!--IAQ Details-->
-                <li class="w3-bar">
-                    <img src="https://icon-library.net/images/air-quality-icon/air-quality-icon-16.jpg"
-                        class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
-                    <div class="w3-bar-item">
-                        <span id="IAQvalue" class="w3-large"></span><br>
-                        <span id="IAQParagraph" class="w3-large"></span>
-                    </div>
-                </li>
+            <!--Main content-->
+            <div class="split left">
+                <div class="centered" style="width: 90%">
+                    <ul class="w3-ul w3-card-4" style="background-color: #FFFFFF; margin-top: -10%">
 
-                <!--Temperature Details-->
-                <li class="w3-bar">
-                    <img src="https://png2.cleanpng.com/sh/0c971d9809b6db0026bda86c28837eb6/L0KzQYm3U8E5N5hniZH0aYP2gLBuTgRmdaFqitN9dYLoPcXvhgJud55qjNd7LXPyfcH8lPVzNZpoh9D8LXPvecG0ggJ1NaVqheJucnH3hcPsTgBvb155itN3c4Dkgrb1lL1qdZJsfeU2NXHkdYq5gchiO5Q8fas3OUe1Q4W8UMcyPWM2S6s5MkS7Roi3Wb5xdpg=/kisspng-temperature-thermometer-computer-icons-clip-art-temperature-png-transparent-images-5aae92a8a3c7e9.9723450715213902486709.png"
-                        class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
-                    <div class="w3-bar-item">
-                        <span id="TempDetails" class="w3-large"></span><br>
-                    </div>
-                </li>
+                        <!--Temperature Details-->
+                        <li class="w3-bar">
+                            <img src="https://raw.githubusercontent.com/CompEng0001/IoT-and-Our-Schools-Environments-for-Education/master/Media/WebGUI/calendar_clock_icon.png"
+                                class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+                            <div class="w3-bar-item">
+                                <span id="time" class="w3-large" color="#FFFFFF"></span><br>
+                                <span id="date"></span>
+                                
+                            </div>
+                        </li>
 
-                <!--Relavitve Humidity Details-->
-                <li class="w3-bar">
-                    <img src="http://www.cirruscon.com/wp-content/uploads/2019/02/temp-icon.png"
-                        class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
-                    <div class="w3-bar-item">
-                        <span id="HumDetails" class="w3-large"></span><br>
-                    </div>
-                </li>
+                        <!--Temperature Details-->
+                        <li class="w3-bar">
+                            <img src="https://raw.githubusercontent.com/CompEng0001/IoT-and-Our-Schools-Environments-for-Education/master/Media/WebGUI/thermometer_icon.png"
+                                class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+                            <div class="w3-bar-item">
+                                <span id="TempDetails" class="w3-large"></span><br>
+                                <span>Current Temperature</span>
+                            </div>
+                        </li>
 
-                <!--Particulate Matter Details-->
-                <li class="w3-bar">
-                    <img src="https://st4.depositphotos.com/23877174/26257/v/950/depositphotos_262577782-stock-illustration-dust-icon-vector-from-air.jpg"
-                        class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
-                    <div class="w3-bar-item">
-                        <span id="DustDetails" class="w3-large"></span><br>
-                    </div>
-                </li>
-                
-                <!--Pressure Details-->
-                <li class="w3-bar">
-                        <img src="https://cdn4.iconfinder.com/data/icons/weather-287/32/92-_pressure-_air-_wind-_weather-512.png"
-                            class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
-                        <div class="w3-bar-item">
-                            <span id="BarDetails" class="w3-large"></span><br>
-                        </div>
-                    </li>
+                        <!--Relavitve Humidity Details-->
+                        <li class="w3-bar">
+                            <img src="https://raw.githubusercontent.com/CompEng0001/IoT-and-Our-Schools-Environments-for-Education/master/Media/WebGUI/Humidity_icon.png"
+                                class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+                            <div class="w3-bar-item">
+                                <span id="HumDetails" class="w3-large"></span><br>
+                                <span>Relative Humidity</span>
+                            </div>
+                        </li>
 
-                <!--Light Details-->
-                <li class="w3-bar">
-                    <img src="https://haneco.com.au/wp-content/uploads/2018/01/gt-icon-lumen.svg?x89727"
-                        class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
-                    <div class="w3-bar-item">
-                        <span id="LightDetails" class="w3-large"></span><br>
-                    </div>
-                </li>
+                        <!--MQ5 GAS DATA-->
+                        <li class="w3-bar">
+                            <img src="https://raw.githubusercontent.com/CompEng0001/IoT-and-Our-Schools-Environments-for-Education/master/Media/WebGUI/MQ5_Dashboard_icon.png"
+                                class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+                            <div class="w3-bar-item">
+                                <span id="gasParagraph" class="w3-large"></span><br>
+                                <span>Detected Gas  | Quantity</span>
+                            </div>
+                        </li>
 
-            </ul>
+                        <!--IAQ Details-->
+                        <li class="w3-bar">
+                            <img src="https://raw.githubusercontent.com/CompEng0001/IoT-and-Our-Schools-Environments-for-Education/master/Media/WebGUI/IAQ_icon.png"
+                                class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+                            <div class="w3-bar-item">
+                                <span id="IAQvalue" class="w3-large"></span><br>
+                                <span>IAQ Value | Index</span>
+                            </div>
+                        </li>
 
-            <table>
-                <td>
-                    <!--Actual gas detected in PPM-->
-                    <div class="gas-display" style="background-color: #FFFFFF; padding: 0.3%; ">
-                        <div class="gas-info">
-                            <span id="IAQParagraph" class="iaq-paragraph"></span>
-                        </div>
-                        <h4 class="metadata" id="IAQ"></h4>
-                    </div>
-                </td>
+                        <!--Particulate Matter Details-->
+                        <li class="w3-bar">
+                            <img src="https://raw.githubusercontent.com/CompEng0001/IoT-and-Our-Schools-Environments-for-Education/master/Media/WebGUI/dust_icon.jpg"
+                                class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+                            <div class="w3-bar-item">
+                                <span id="DustDetails" class="w3-large"></span><br>
+                                <span>Particulate Matter Concentration</span>
+                            </div>
+                        </li>
+                        
+                        <!--Pressure Details-->
+                        <li class="w3-bar">
+                                <img src="https://raw.githubusercontent.com/CompEng0001/IoT-and-Our-Schools-Environments-for-Education/master/Media/WebGUI/pressure_icon.png"
+                                    class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+                                <div class="w3-bar-item">
+                                    <span id="BarDetails" class="w3-large"></span><br>
+                                    <span>Estmated Air Pressure</span>
+                                </div>
+                            </li>
 
-                <td>
-                    <!--Actual gas detected in PPM-->
-                    <div class="gas-display" style="padding: 0.3%;">
-                        <div class=" gas-info">
-                            <span id="gasParagraph" class="gas-paragraph"></span>
-                        </div>
-                        <h4 class="metadata" id="PPM"></h4>
-                    </div>
-                    <!--END Actual gas detected in PPM-->
-                </td>
-                <!--END Actual gas detected in PPM-->
-                <!--END Gas-->
-            </table>
+                        <!--Light Details-->
+                        <li class="w3-bar">
+                            <img src="https://raw.githubusercontent.com/CompEng0001/IoT-and-Our-Schools-Environments-for-Education/master/Media/WebGUI/lumen_icon.png"
+                                class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
+                            <div class="w3-bar-item">
+                                <span id="LightDetails" class="w3-large"></span><br>
+                            <span>Light Intensity 0 (Dark) to 10 (Bright) </span>
+                            </div>
+                        </li>               
+                    </ul>
+                </div>
+            </div>
+
+            <div class="split right">
+                <div class="centered">
+                    <table>
+                        <tr>
+                            <td>
+                                <iframe width="430" height="250" style="border: 1px solid #ffffff;"
+                                    src="https://thingspeak.com/channels/792104/charts/1?&color=%23FF0000&dynamic=true&results=10&title=Temperature&type=step&xaxis=Date%2FTime&yaxis=Temp++%C2%B0C"></iframe>
+                            </td>
+                            <td>
+                                <iframe width="430" height="250" style="border: 1px solid #ffffff;"
+                                    src="https://thingspeak.com/channels/792104/charts/3?&color=%23d62020&dynamic=true&results=10&title=Humidity&type=step&xaxis=Date%2FTime&yaxis=Humidity+%25"></iframe>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <iframe width="430" height="250" style="border: 1px solid #ffffff;"
+                                    src="https://thingspeak.com/channels/792104/charts/2?&color=%23d62020&dynamic=true&results=10&title=Barometer&type=step&xaxis=Date%2FTime&yaxis=Pressure+%28hPA%29"></iframe>
+                            </td>
+                            <td>
+                                <iframe width="430" height="250" style="border: 1px solid #cccccc;"
+                                    src="https://thingspeak.com/channels/792104/charts/5?&color=%23d62020&dynamic=true&results=10&title=Dust+Concentration&type=line&yaxis=Dust+%28pcs%2F0.01cf%29"></iframe>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <!--END Humidity-->
+                                <iframe width="430" height="250" style="border: 1px solid #cccccc;"
+                                    src="https://thingspeak.com/channels/792104/charts/4?&color=%23d62020&days=1&dynamic=true&results=20&title=Air+Quality+&type=line&yaxis=IAQ+Index+%28+lower+%25+cleaner+%29&yaxismax=500&yaxismin=0"></iframe>
+                            </td>
+                            <td>
+                                <iframe width="430" height="250" style="border: 1px solid #ffffff;"
+                                    src="https://thingspeak.com/channels/792104/charts/7?&color=%23d62020&dynamic=true&results=10&title=Gas+Levels&type=line&yaxis=Rs%2FRo&yaxismax=10&yaxismin=0"></iframe>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="footer background-text">
+                <h4 id="Notice"> </h4>
+                <span id="Disclaimer"></span>
+                <span id="Acknowledgements"></span>
+            </div>
         </div>
-    </div>
-
-    <div class="split right">
-        <div class="centered">
-            <table>
-                <tr>
-                    <td>
-                        <iframe width="460" height="260" style="border: 1px solid #ffffff;"
-                            src="https://thingspeak.com/channels/792104/charts/1?&color=%23FF0000&dynamic=true&results=10&title=Temperature&type=step&xaxis=Date%2FTime&yaxis=Temp++%C2%B0C"></iframe>
-                    </td>
-                    <td>
-                        <iframe width="460" height="260" style="border: 1px solid #ffffff;"
-                            src="https://thingspeak.com/channels/792104/charts/3?&color=%23d62020&dynamic=true&results=10&title=Humidity&type=step&xaxis=Date%2FTime&yaxis=Humidity+%25"></iframe>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <iframe width="460" height="260" style="border: 1px solid #ffffff;"
-                            src="https://thingspeak.com/channels/792104/charts/2?&color=%23d62020&dynamic=true&results=10&title=Barometer&type=step&xaxis=Date%2FTime&yaxis=Pressure+%28hPA%29"></iframe>
-                    </td>
-                    <td>
-                        <iframe width="460" height="260" style="border: 1px solid #cccccc;"
-                            src="https://thingspeak.com/channels/792104/charts/5?&color=%23d62020&dynamic=true&results=10&title=Dust+Concentration&type=line&yaxis=Dust+%28pcs%2F0.01cf%29"></iframe>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <!--END Humidity-->
-                        <iframe width="460" height="260" style="border: 1px solid #cccccc;"
-                            src="https://thingspeak.com/channels/792104/charts/4?&color=%23d62020&days=1&dynamic=true&results=20&title=Air+Quality+&type=line&yaxis=IAQ+Index+%28+lower+%25+cleaner+%29&yaxismax=500&yaxismin=0"></iframe>
-                    </td>
-                    <td>
-                        <iframe width="460" height="260" style="border: 1px solid #ffffff;"
-                            src="https://thingspeak.com/channels/792104/charts/7?&color=%23d62020&dynamic=true&results=10&title=Gas+Levels&type=line&yaxis=Rs%2FRo&yaxismax=10&yaxismin=0"></iframe>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <div class="footer background-text">
-        <h4 id="Notice"> </h4>
-        <h4 id="Disclaimer"> </h4>
-        <h6 id="Acknowledgements"></h6>
-    </div>
-
-</body>
-
+    </body>
 </html>
 
 <script>
 
     var dt = new Date();
-    document.getElementById("datetime").innerHTML = (("0" + dt.getDate()).slice(-2)) + "." +
-        (("0" + (dt.getMonth() + 1)).slice(-2)) + "." + (dt.getFullYear()) + " Current time: " +
-        (("0" + dt.getHours()).slice(-2)) + ":" + (("0" + dt.getMinutes()).slice(-2));
+    document.getElementById("date").innerHTML = "Today's date: "+ (("0" + dt.getDate()).slice(-2)) + "/" + (("0" + (dt.getMonth() + 1)).slice(-2)) + "/" + (dt.getFullYear());
+    document.getElementById("time").innerHTML = "Current time: " + (("0" + dt.getHours()).slice(-2)) + ":" + (("0" + dt.getMinutes()).slice(-2));
 
     document.getElementById("Notice").innerHTML = ("The project has been built by: some class/students?");
     document.getElementById("Disclaimer").innerHTML = ("Disclaimer: The environmental data recorded and shown here is to be seen as an approximation.")
@@ -201,8 +193,7 @@
                 let gasIndex = GasLookupTable[value].indexOf(gas_value);
                 let gasDetails = GasLookupTable.GasNames[gasIndex];
                 let gasPPM = GasLookupTable.PPM[counter] + " PPM";
-                document.getElementById('gasParagraph').innerHTML = gasDetails;
-                document.getElementById('PPM').innerHTML = gasPPM;
+                document.getElementById('gasParagraph').innerHTML = gasDetails.toString().concat(" | ").concat(gasPPM.toString());
                 break  //returns gasName and PPM
             }
             counter += 1;
@@ -231,18 +222,17 @@
         // only change (jso_obj.YOURFIELD#))
         var IAQ_score_result = parseFloat(JSON.parse(json_obj.field4)).toFixed(2);
         //JSON_gas_value = parseFloat(JSON_gas_value).toFixed(2);
-        var IAQhol = "The IAQ rating is ";
         var IAQMes = "";
         var IAQtypes = ["Hazardous", "Very Unhealthy", "Unhealthy", "Unhealthy for Sensitive Groups", " Moderate", "Good"];
         let IAQ_score = parseInt(IAQ_score_result);
         if (IAQ_score > 300) { IAQMes = IAQtypes[0]; }
-        else if (IAQ_score >= 201 && IAQ_score <= 300) { IAQMes = IAQhol.concat(IAQtypes[1]); }
-        else if (IAQ_score >= 176 && IAQ_score <= 200) { IAQMes = IAQhol.concat(IAQtypes[2]); }
-        else if (IAQ_score >= 151 && IAQ_score <= 175) { IAQMes = IAQhol.concat(IAQtypes[3]); }
-        else if (IAQ_score >= 51 && IAQ_score <= 150) { IAQMes = IAQhol.concat(IAQtypes[4]); }
-        else if (IAQ_score >= 0 && IAQ_score <= 50) { IAQMes = IAQhol.concat(IAQtypes[5]); }
-        document.getElementById('IAQParagraph').innerHTML = IAQMes;
-        document.getElementById('IAQvalue').innerHTML = "The IAQ Value is ".concat(IAQ_score);
+        else if (IAQ_score >= 201 && IAQ_score <= 300) { IAQMes = IAQtypes[1]; }
+        else if (IAQ_score >= 176 && IAQ_score <= 200) { IAQMes = IAQtypes[2]; }
+        else if (IAQ_score >= 151 && IAQ_score <= 175) { IAQMes = IAQtypes[3]; }
+        else if (IAQ_score >= 51 && IAQ_score <= 150) { IAQMes = IAQtypes[4]; }
+        else if (IAQ_score >= 0 && IAQ_score <= 50) { IAQMes = IAQtypes[5];}
+        document.getElementById('IAQvalue').innerHTML = IAQ_score.toString().concat(" %    | ").concat(IAQMes);
+
     }
 
     function getLastEntries()
@@ -253,12 +243,11 @@
         var json_obj_Dust= JSON.parse(Get('https://api.thingspeak.com/channels/792104/fields/5/last.json'));
         var json_obj_light= JSON.parse(Get('https://api.thingspeak.com/channels/792104/fields/6/last.json'));
 
-        document.getElementById('TempDetails').innerHTML= JSON.parse(json_obj_temp.field1);
-        document.getElementById('HumDetails').innerHTML= JSON.parse(json_obj_hum.field3);
-        document.getElementById('BarDetails').innerHTML= JSON.parse(json_obj_pressure.field2);
-        document.getElementById('DustDetails').innerHTML= JSON.parse(json_obj_Dust.field5);
+        document.getElementById('TempDetails').innerHTML= parseFloat(JSON.parse(json_obj_temp.field1)).toFixed(2).concat("°C");
+        document.getElementById('HumDetails').innerHTML= parseFloat(JSON.parse(json_obj_hum.field3)).toFixed(2).concat(" %");
+        document.getElementById('BarDetails').innerHTML= parseFloat(JSON.parse(json_obj_pressure.field2)).toFixed(2).concat(" kPa");
+        document.getElementById('DustDetails').innerHTML= parseFloat(JSON.parse(json_obj_Dust.field5)).toFixed(2).concat(" pcs/0.01cf");
         document.getElementById('LightDetails').innerHTML= JSON.parse(json_obj_light.field6);
-
     }
 
     function Get(yourUrl) {
@@ -270,9 +259,8 @@
 
     function refreshDate() {
         var dt = new Date();
-        document.getElementById("datetime").innerHTML = (("0" + dt.getDate()).slice(-2)) + "." +
-            (("0" + (dt.getMonth() + 1)).slice(-2)) + "." + (dt.getFullYear()) + " Current time: " +
-            (("0" + dt.getHours()).slice(-2)) + ":" + (("0" + dt.getMinutes()).slice(-2));
+        document.getElementById("date").innerHTML = " Today's date: " + (("0" + dt.getDate()).slice(-2)) + "/" + (("0" + (dt.getMonth() + 1)).slice(-2)) + "/" + (dt.getFullYear());
+        document.getElementById("time").innerHTML = " Current time: " + (("0" + dt.getHours()).slice(-2)) + ":" + (("0" + dt.getMinutes()).slice(-2));
     }
 
     function refresher() {
@@ -290,9 +278,11 @@
         var state = document.readyState
         if (state == 'interactive') {
             document.getElementsById('contents').style.visibility = "hidden";
+            
         } else if (state == 'complete') {
             setTimeout(function () {
                 document.getElementById('interactive');
+                document.getElementById('main-content').style.backgroundImage = "url(\"https://raw.githubusercontent.com/CompEng0001/IoT-and-Our-Schools-Environments-for-Education/master/Media/WebGUI/IoT-Temp-Background.jpg?token=AJTMQ4IKUP2QF2I5GXZZ3H25NEQ4K\")";
                 document.getElementById('load').style.visibility = "hidden";
                 document.getElementById('contents').style.visibility = "visible";
             }, 5000);
@@ -323,7 +313,6 @@
         overflow: hidden;
         margin: 0;
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        background-image: url("https://raw.githubusercontent.com/CompEng0001/IoT-and-Our-Schools-Environments-for-Education/master/Media/WebGUI/IoT-Temp-Background.jpg?token=AJTMQ4IKUP2QF2I5GXZZ3H25NEQ4K");
         background-color: #ffffff;
         height: 100%;
         background-repeat: no-repeat;
@@ -339,7 +328,7 @@
     #load {
         width: 100%;
         height: 100%;
-        position: fixed;
+        position: absolute;
         z-index: 9999;
         background-size: 100% 100%;
         animation: fadein 3s;
@@ -370,8 +359,6 @@
     }
 
     .background-image {
-        background-image: url("https://raw.githubusercontent.com/CompEng0001/IoT-and-Our-Schools-Environments-for-Education/master/Media/WebGUI/IoT-Temp-Background.jpg?token=AJTMQ4IKUP2QF2I5GXZZ3H25NEQ4K");
-        background-color: #ffffff;
         height: 100%;
         background-position: center;
         background-repeat: no-repeat;
@@ -384,6 +371,7 @@
         top: 50%;
         left: 50%;
         color: white;
+        
     }
 
     .split {
@@ -398,8 +386,7 @@
     }
 
     .left {
-        height: 75%;
-        position: relative;
+        height: 100%;
         margin-top: 1.4%;
         left: 0;
     }
@@ -415,7 +402,7 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        text-align: center;
+        text-align: left;
     }
 
     .footer {
@@ -426,41 +413,4 @@
         text-align: center;
     }
 
-    .gas-paragraph {
-        color: #242627;
-        float: right;
-        text-align: center;
-        font-size: 30px;
-        width: 70%;
-        margin-top: 20%;
-        margin-right: 15%;
-        font-weight: bold;
-        outline-offset: 5px;
-        outline: rgb(112, 128, 144) solid 0.5px;
-        line-height: 2.335;
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    }
-
-    .iaq-paragraph {
-        color: #242627;
-        float: right;
-        text-align: center;
-        font-size: 30px;
-        width: 90%;
-        margin-top: 20%;
-        margin-right: 15%;
-        font-weight: bold;
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    }
-
-    #IAQ {
-        top: 65%;
-        color: #3b3e3f;
-    }
-
-    .metadata {
-        position: fixed;
-        left: 50%;
-        transform: translate(-400%, 750%);
-    }
 </style>
