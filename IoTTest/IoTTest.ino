@@ -1,9 +1,9 @@
 /*************************************************************************************************************************************************
     Sketch developed by User: CompEng0001
     Creation Date: 12/07/2019
-    Verison: 1.4
-    Hardware: Arduino MKR 1010 uC, Dust sensor, Gas (MQ5) sensor, Light sensors, BMP280, Audio
-    Documentation: https://github.com/CompEng0001/IoT-and-Our-Schools-Enivronments-for-Education-
+    Verison: 2.3
+    Hardware: Arduino MKR 1010 uC, Dust sensor, Gas (MQ5) sensor, Light sensors & BME680
+    Documentation: https://github.com/CompEng0001/IoT-and-Our-Schools-Enivronments-for-Education
     Licence: Attribution-NonCommercial-ShareAlike 4.0 International [CC BY-NC-SA 4.0] (Where licences for hardware and software do not conflict)
 **************************************************************************************************************************************************/
 
@@ -31,7 +31,7 @@ float concentration = 0;
 float gasValue = 0.0;
 
 // BME680 Sensor variables
-float temp, hum, bar, voc, IAQ_Score;
+float temp, hum, bar, voc, IAQ_Value;
 #define BME_SCK 13
 #define BME_MISO 12
 #define BME_MOSI 11
@@ -58,18 +58,17 @@ void setup()
 void loop()
 {
   dataAcquisition(); // get data from sensors
-  displayData();
-  Serial.print("Total Seconds ===> ");
-  Serial.println((counter+= 30));
+  //displayData();
   wiFiController();
-  sendToThingSpeak(temp, bar, hum, IAQ_Score, concentration, lightLevel, gasValue);
+  sendToThingSpeak(temp, bar, hum, IAQ_Value, concentration, lightLevel, gasValue);
+  delay(600000); // time to rest
 }
 
 /**
   dataAcquisition is acquires data for the 5 sensors
   @sensor Dust Sensor (concentration)
   @sensor MQ5 Gas Sensor
-  @sensor BMP680 (Barometer, Temperature,Humidity and VOC)
+  @sensor BME680 (Barometer, Temperature, Humidity and VOC)
   @sensor Light sensor (intensity of light)
 */
 void dataAcquisition()
@@ -121,28 +120,25 @@ void getBMEValues()
   temp = bme680.sensor_result_value.temperature;         // Get the Temperature reading from the BMP280
   bar = bme680.sensor_result_value.pressure / 100.0;   // Get the Pressure reading from the BMP280
   hum = bme680.sensor_result_value.humidity;
-    for(int i=0; i<100;i++){
   voc += bme680.sensor_result_value.gas;
-  
-  }
-  voc /= 100;
+
+// Calculate the IAQ Value
   int hum_ref = 40, gas_ref = 0, gasLL = 5000, gasUL = 50000;
   float humscore=0.00, gasscore=0.00;
 
-  // Get humidity Ref
-
+  // Get humidity score between 0.00 and 100.00 
   if(hum >= 38 && hum <=42) { humscore = 0.25 *100; }
   else if (hum < 38) { humscore = ((0.25/hum_ref)*hum)*100; }
   else { humscore = (((-0.25/(100-hum_ref))*hum)+0.416666)*100; }
-    
-  // Get VOC ref
+
+  // Get VOC score between 0.00 and 100.00
   if(voc >= gasUL) { gas_ref = gasUL; } 
   else if (voc <= gasLL) { gas_ref = gasLL; }
   else { gas_ref = (int)voc;}
   gasscore = (0.75/(gasUL-gasLL)*gas_ref - (gasLL*(0.75/(gasUL-gasLL))))*100;
   
-  // Get IAQ score
-  IAQ_Score = (100-(humscore+gasscore))*5;
+  // Get IAQ Value between 0.00 and +300.00%
+  IAQ_Value = (100-(humscore+gasscore))*5;
 }
 
 /**
@@ -170,7 +166,7 @@ void getDustConcentration()
 }
 
 /**
-   Display all sensor data on to serial monitor for debugging purposes
+* Display all sensor data on to serial monitor for debugging purposes
 */
 void displayData()
 {
@@ -198,7 +194,7 @@ void displayData()
   Serial.print("The VOC (khoms) is: ");
   Serial.println(voc);
   Serial.print("The IAQ score (%) is: ");
-  Serial.println(IAQ_Score);
+  Serial.println(IAQ_Value);
   Serial.println();
 }
 
@@ -207,7 +203,7 @@ void displayData()
   @param Temperature
   @param Pressure
   @param humidity
-  @param VOC
+  @param IAQ_Value
   @param Dust
   @param Light
   @Param Gas
@@ -223,9 +219,12 @@ void sendToThingSpeak(float l_temp, float l_bar, float l_hum, float l_IAQ, float
   ThingSpeak.setField(6, l_light);
   ThingSpeak.setField(7, l_gas);
 
-  // write to the ThingSpeak channel
+  /*Write to the ThingSpeak channel, there is a return value that tells us if it is successful or not. 
+    But we only need this for debugging, most ofternly it is to do with WiFi connection or a wrong API key.
+  */
   int x = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
 
+/*
   if (x == 200)
   {
     Serial.println("Channel update successful.");
@@ -234,7 +233,7 @@ void sendToThingSpeak(float l_temp, float l_bar, float l_hum, float l_IAQ, float
   {
     Serial.println("Problem updating channel. HTTP error code " + String(x)); // will return a number for referencing the problem
   }
-
+*/  
   WiFi.disconnect();
   WiFi.lowPowerMode();
 }
