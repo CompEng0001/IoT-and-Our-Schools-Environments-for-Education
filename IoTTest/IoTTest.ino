@@ -1,7 +1,7 @@
 /*************************************************************************************************************************************************
     Sketch developed by User: CompEng0001
     Creation Date: 12/07/2019
-    Verison: 2.3
+    Verison: 2.5
     Hardware: Arduino MKR 1010 uC, Dust sensor, Gas (MQ5) sensor, Light sensors & BME680
     Documentation: https://github.com/CompEng0001/IoT-and-Our-Schools-Enivronments-for-Education
     Licence: Attribution-NonCommercial-ShareAlike 4.0 International [CC BY-NC-SA 4.0] (Where licences for hardware and software do not conflict)
@@ -15,19 +15,19 @@
 #include <ArduinoLowPower.h>   // enable powersaving 
 
 //WiFi and Thingspeak variables
-char ssid[] = "BT-QXA277"; // replace with your wifi ssid and wpa2 key
-char pass[] = "G67pDKimraqUpQ";
-unsigned long myChannelNumber = 792104;         // ThingSpeak Channel number
-const char *myWriteAPIKey = "B1NL1Z3AL4Q8ALD5"; //  Enter your Write API key from ThingSpeak`
+char ssid[] = "BT-QXA277"; // replace with your wifi ssid
+char pass[] = "G67pDKimraqUpQ"; // replace with your ssid password
+unsigned long myChannelNumber = 792104;         // replace with your ThingSpeak Channel number
+const char *myWriteAPIKey = "B1NL1Z3AL4Q8ALD5"; //  replace with your Write API key from ThingSpeak`
 
 // Dust Sensor variables
-int pin = 0;
+int pin = 0; // Digital Pin 0 of Ardunio
 unsigned long duration;
 unsigned long starttime;
 float concentration = 0;
 
 // MQ5 Sensor variables
-#define GAS_SENSOR A0
+#define GAS_SENSOR A0 // Analogue pin 0 of Arduino
 float gasValue = 0.0;
 
 // BME680 Sensor variables
@@ -39,13 +39,12 @@ float temp, hum, bar, voc, IAQ_Value;
 #define IIC_ADDR  uint8_t(0x76)
 
 // Light Sensor variables
-#define LIGHT_SENSOR A4        //Grove - Light Sensor is connected to A4of Arduino
-const int ledPin = 12;         //Connect the LED Grove module to Pin12, Digital 12
-const int thresholdvalue = 10; //The treshold for which the LED should turn on. Setting it lower will make it go on at more light, higher for more darkness
-int lightLevel, counter = 0;
+#define LIGHT_SENSOR A4        //Grove - Light Sensor is connected to Analogue pin 4 of Arduino
+
+int lightLevel;
 
 WiFiClient client;   // create instance of WiFiClient
-Seeed_BME680 bme680(IIC_ADDR); //IIC
+Seeed_BME680 bme680(IIC_ADDR); //IIC address remember 0x76
 
 // this function runs once everytime the microController is turned on.
 void setup()
@@ -59,8 +58,8 @@ void loop()
 {
   dataAcquisition(); // get data from sensors
   //displayData();
-  wiFiController();
-  sendToThingSpeak(temp, bar, hum, IAQ_Value, concentration, lightLevel, gasValue);
+  wiFiController(); // Connect to WiFi
+  sendToThingSpeak(temp, bar, hum, IAQ_Value, concentration, lightLevel, gasValue); // send data to thingspeak channel and then turn off WiFi
   delay(600000); // time to rest
 }
 
@@ -75,8 +74,8 @@ void dataAcquisition()
 {
   getDustConcentration(); // this takes 30 seconds
   getGasData();           // Get the reading from the GAS_SENSOR
-  getLightLevels();
-  getBMEValues();
+  getLightLevels(); // Get the light levels 
+  getBMEValues(); // get the Temperature, humidity, pressure and VOC (IAQ Index value)
 }
 
 /**
@@ -89,7 +88,7 @@ void getGasData()
   float RS_gas; // Get value of RS in a GAS
   float ratio;  // Get ratio RS_GAS/RS_air
   int sensorValue = analogRead(GAS_SENSOR);
-  sensor_volt = (float)sensorValue / 1024 * 5.0;
+  sensor_volt = (float)sensorValue / 1024 * 5.0; /// here we want to get the voltage at the out. 
   RS_gas = (5.0 - sensor_volt) / sensor_volt; // omit *RL
   float RO = RS_gas / 6.5;
   /*-Replace the name "R0" with the value of R0 in the demo of First Test -*/
@@ -119,10 +118,11 @@ void getBMEValues()
   }
   temp = bme680.sensor_result_value.temperature;         // Get the Temperature reading from the BMP280
   bar = bme680.sensor_result_value.pressure / 100.0;   // Get the Pressure reading from the BMP280
+
   hum = bme680.sensor_result_value.humidity;
   voc += bme680.sensor_result_value.gas;
 
-// Calculate the IAQ Value
+  // Calculate the IAQ Value
   int hum_ref = 40, gas_ref = 0, gasLL = 5000, gasUL = 50000;
   float humscore=0.00, gasscore=0.00;
 
@@ -142,7 +142,8 @@ void getBMEValues()
 }
 
 /**
-
+ * getDustConcentration() retrieves the the approx matter in the air as it passes through the laser.
+ * The takes 30 seconds, no way around it. 
 */
 void getDustConcentration()
 {
@@ -166,7 +167,7 @@ void getDustConcentration()
 }
 
 /**
-* Display all sensor data on to serial monitor for debugging purposes
+  Display all sensor data on to serial monitor for debugging purposes
 */
 void displayData()
 {
@@ -224,18 +225,11 @@ void sendToThingSpeak(float l_temp, float l_bar, float l_hum, float l_IAQ, float
   */
   int x = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
 
-/*
-  if (x == 200)
-  {
-    Serial.println("Channel update successful.");
-  }
-  else
-  {
-    Serial.println("Problem updating channel. HTTP error code " + String(x)); // will return a number for referencing the problem
-  }
-*/  
+  //if (x == 200) { Serial.println("Channel update successful.");}
+  //else {Serial.println("Problem updating channel. HTTP error code " + String(x)); }
+
   WiFi.disconnect();
-  WiFi.lowPowerMode();
+  WiFi.lowPowerMode(); 
 }
 
 /**
@@ -253,16 +247,18 @@ void setupConnectivity()
     delay(10000);
   }
 
-  Serial.println("");
-  Serial.println("BMP280 is connected");
+  Serial.println("");  Serial.println("BMP280 is connected");
 
   ThingSpeak.begin(client); // Initialize ThingSpeak
 
 }
 
+/**
+  wiFiController() turns on the WiFi module and then connects to the speccified SSID and supplied password
+ */
 void wiFiController()
 {
-  WiFi.noLowPowerMode();
+  WiFi.noLowPowerMode(); // turn on WiFi after it is turned off
 
   while (WiFi.status() != WL_CONNECTED) // do this until connected to Wifi
   {
