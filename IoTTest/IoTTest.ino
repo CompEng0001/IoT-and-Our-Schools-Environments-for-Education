@@ -7,42 +7,42 @@
     Licence: Attribution-NonCommercial-ShareAlike 4.0 International [CC BY-NC-SA 4.0] (Where licences for hardware and software do not conflict)
 **************************************************************************************************************************************************/
 
-// Setup variables to be used
+/* Required Libaries */
 #include <WiFiNINA.h>        // enable WiFi for MKR1010
 #include <math.h>            // for some math functions
 #include <seeed_bme680.h>    // for BME680 sensor
 #include <ThingSpeak.h>      // downlaod the library - ThingSpeak
 #include <ArduinoLowPower.h>   // enable powersaving 
 
-//WiFi and Thingspeak variables
+/* WiFi and Thingspeak variables */
 char ssid[] = "BT-QXA277"; // replace with your wifi ssid
 char pass[] = "G67pDKimraqUpQ"; // replace with your ssid password
 unsigned long myChannelNumber = 792104;         // replace with your ThingSpeak Channel number
 const char *myWriteAPIKey = "B1NL1Z3AL4Q8ALD5"; //  replace with your Write API key from ThingSpeak`
 
-// Dust Sensor variables
+/* Dust Sensor variables */
 int pin = 0; // Digital Pin 0 of Ardunio
 unsigned long duration;
 unsigned long starttime;
 float concentration = 0;
 
-// MQ5 Sensor variables
+/* MQ5 Sensor variables */
 #define GAS_SENSOR A0 // Analogue pin 0 of Arduino
 float gasValue = 0.0;
 
-// BME680 Sensor variables
+/* BME680 Sensor variables */
 float temp, hum, bar, voc, IAQ_Value;
 #define BME_SCK 13
 #define BME_MISO 12
 #define BME_MOSI 11
 #define BME_CS 10
-#define IIC_ADDR  uint8_t(0x76)
+#define IIC_ADDR uint8_t(0x76)
 
-// Light Sensor variables
+/* Light Sensor variables */
 #define LIGHT_SENSOR A4        //Grove - Light Sensor is connected to Analogue pin 4 of Arduino
-
 int lightLevel;
 
+/* object creation */
 WiFiClient client;   // create instance of WiFiClient
 Seeed_BME680 bme680(IIC_ADDR); //IIC address remember 0x76
 
@@ -155,7 +155,7 @@ void getDustConcentration()
   {
     duration = pulseIn(pin, LOW);
     lowpulseoccupancy = lowpulseoccupancy + duration;
-    if ((millis() - starttime) > sampletime_ms) //if the sampel time == 30s
+    if ((millis() - starttime) > sampletime_ms) //if elapsed time is > sampel time == 30s
     {
       float ratio = lowpulseoccupancy / (sampletime_ms * 10.0);                             // Integer percentage 0=>100
       concentration = 1.1 * pow(ratio, 3) - 3.8 * pow(ratio, 2) + 520 * ratio + 0.62; // using spec sheet curve
@@ -220,7 +220,8 @@ void sendToThingSpeak(float l_temp, float l_bar, float l_hum, float l_IAQ, float
   ThingSpeak.setField(6, l_light);
   ThingSpeak.setField(7, l_gas);
 
-  /*Write to the ThingSpeak channel, there is a return value that tells us if it is successful or not. 
+  /*
+    Write to the ThingSpeak channel, there is a return value that tells us if it is successful or not. 
     But we only need this for debugging, most ofternly it is to do with WiFi connection or a wrong API key.
   */
   int x = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
