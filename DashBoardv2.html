@@ -214,6 +214,7 @@
             GasNames: ["LPG", "Methane (CH4)", "Hydrogen (H2)", "Ethanol/Methanol", "Carbon-dioxide (C0)", "Normal Air"],
             PPM: [200, 500, 800, 1000, 1600, 2000, 3000, 5000, 10000]
         };
+        
         var counter = 0;
         for (var value in GasLookupTable) {
             if (GasLookupTable.hasOwnProperty(value) && GasLookupTable[value].indexOf(gas_value) != -1) {
