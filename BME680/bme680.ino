@@ -1,8 +1,8 @@
 /*************************************************************************************************************************************************
     Sketch developed by User: CompEng0001
-    Creation Date: 12/07/2019
-    Verison: 2.6
-    Hardware: Arduino MKR 1010 uC, Dust sensor, Gas (MQ5) sensor, Light sensors & BME680
+    Creation Date: 04/02/2020
+    Verison: 1.2
+    Hardware: Arduino MKR 1010 uC, BME680
     Documentation: https://github.com/CompEng0001/IoT-and-Our-Schools-Enivronments-for-Education
     Licence: Attribution-NonCommercial-ShareAlike 4.0 International [CC BY-NC-SA 4.0] (Where licences for hardware and software do not conflict)
 **************************************************************************************************************************************************/
