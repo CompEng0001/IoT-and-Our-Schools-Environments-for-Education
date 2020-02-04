@@ -15,13 +15,13 @@
 #include <ArduinoLowPower.h>   // enable powersaving 
 
 /* WiFi and Thingspeak variables */
-char ssid[] = "BT-QXA277"; // replace with your wifi ssid
-char pass[] = "G67pDKimraqUpQ"; // replace with your ssid password
+char ssid[] = "CompEng0001"; // replace with your wifi ssid
+char pass[] = "12345678"; // replace with your ssid password
 unsigned long myChannelNumber = 792104;         // replace with your ThingSpeak Channel number
 const char *myWriteAPIKey = "B1NL1Z3AL4Q8ALD5"; //  replace with your Write API key from ThingSpeak`
 
 /* Dust Sensor variables */
-int pin = 0; // Digital Pin 0 of Ardunio
+int pin = 5; // Digital Pin 0 of Ardunio
 unsigned long duration;
 unsigned long starttime;
 float concentration = 0;
@@ -39,7 +39,7 @@ float temp, hum, bar, voc, IAQ_Value;
 #define IIC_ADDR uint8_t(0x76)
 
 /* Light Sensor variables */
-#define LIGHT_SENSOR A4        //Grove - Light Sensor is connected to Analogue pin 4 of Arduino
+#define LIGHT_SENSOR A6        //Grove - Light Sensor is connected to Analogue pin 4 of Arduino
 int lightLevel;
 
 /* object creation */
@@ -60,7 +60,7 @@ void loop()
   //displayData();
   wiFiController(); // Connect to WiFi
   sendToThingSpeak(temp, bar, hum, IAQ_Value, concentration, lightLevel, gasValue); // send data to thingspeak channel and then turn off WiFi
-  delay(600000); // time to rest
+  delay(60000); // time to rest
 }
 
 /**
